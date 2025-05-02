@@ -4,6 +4,9 @@ const prisma = new INVOICEPrisma();
 const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
 const courseprisma = new COURSEPrisma();
 
+const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
+const studentprisma = new STUDENTPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const InvoiceService = {
@@ -139,16 +142,21 @@ const InvoiceService = {
           errorStack: null
         };
       }
-      const courseIds = invoice.course ? invoice.course.split(',').map(tag => tag.trim()) : [];
+      const courseIds = invoice.course ? invoice.course.split(',').map((tag) => tag.trim()) : [];
+      const studentIds = invoice.studentName ? invoice.studentName.split(',').map((tag) => tag.trim()) : [];
 
       const invoiceCourses = courseIds.length
         ? await courseprisma.course.findMany({ where: { id: { in: courseIds } } })
         : [];
 
+      const invoiceStudents = studentIds.length
+        ? await studentprisma.student.findMany({ where: { id: { in: studentIds } } })
+        : [];
+
       return {
         data: {
           invoiceNo: invoice.invoiceNo,
-          studentName: invoice.studentName,
+          studentName: invoiceStudents,
           counsellorName: invoice.counsellorName,
           phone: invoice.phone,
           contactPerson: invoice.contactPerson,
@@ -157,7 +165,13 @@ const InvoiceService = {
           paidAmount: invoice.paidAmount,
           issueDate: invoice.issueDate,
           dueDate: invoice.dueDate,
-          courses: invoiceCourses
+          courses: invoiceCourses,
+          taxPercentage: invoice.taxPercentage,
+          discount: invoice.discount,
+          baseAmount: invoice.baseAmount,
+          totalDiscount: invoice.totalAmount,
+          subtotal: invoice.subtotal,
+          totalTaxes: invoice.totalTaxes
         },
         statusCode: 200,
         isError: false,

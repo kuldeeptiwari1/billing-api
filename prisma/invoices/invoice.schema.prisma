@@ -21,6 +21,12 @@ model invoice {
   issueDate      DateTime
   dueDate        DateTime
   course         String
+  taxPercentage  String   @default("NA")
+  discount       String   @default("NA")
+  baseAmount     String
+  totalDiscount  String
+  subtotal       String
+  totalTaxes     String
   isDeleted      Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

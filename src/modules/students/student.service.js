@@ -1,5 +1,9 @@
 const { PrismaClient : STUDENTPrisma } = require('../../../prisma/students/generated');
 const prisma = new STUDENTPrisma();
+
+const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
+const courseprisma = new COURSEPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const StudentService = {
@@ -25,7 +29,6 @@ const StudentService = {
       };
     }
   },
-  
   
   list: async (params) => {
     try {
@@ -100,11 +103,10 @@ const StudentService = {
     }
   },
 
-
   view: async (id) => {
     try {
-      const record = await prisma.student.findUnique({ where: { id } });
-      if (!record) {
+      const student = await prisma.student.findUnique({ where: { id } });
+      if (!student) {
         return {
           data: null,
           statusCode: 404,
@@ -113,8 +115,17 @@ const StudentService = {
           errorStack: null
         };
       }
+
+      const courseIds = student.courseName ? student.courseName.split(',').map((tag) => tag.trim()) : [];
+      const courses = courseIds.length
+        ? await courseprisma.course.findMany({ where: { id: { in: courseIds } } })
+        : [];
+
       return {
-        data: record,
+        data: {
+          ...student,
+          courseName: courses
+        },
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'recordNotFound', 'students'),
