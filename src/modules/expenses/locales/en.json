@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "EXS001",
+      "message": "expense created successfully.",
+      "ariaLabel": "Notification: expense created successfully"
+    },
+    "updateSuccess": {
+      "code": "EXS002",
+      "message": "expense updated successfully.",
+      "ariaLabel": "Notification: expense updated successfully"
+    },
+    "listSuccess": {
+      "code": "EXS003",
+      "message": "expense list retrieved successfully.",
+      "ariaLabel": "Notification: expense list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "EXS004",
+      "message": "expense details fetched successfully.",
+      "ariaLabel": "Notification: expense details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "EXS005",
+      "message": "expense deleted successfully.",
+      "ariaLabel": "Notification: expense deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "EXE404",
+      "message": "expense not found.",
+      "ariaLabel": "Error: expense not found"
+    },
+    "createFailed": {
+      "code": "EXE403",
+      "message": "expense not created.",
+      "ariaLabel": "Notification: expense not created"
+    },
+    "updateFailed": {
+      "code": "EXE402",
+      "message": "expense update failed.",
+      "ariaLabel": "Notification: expense update failed"
+    },
+    "listFailed": {
+      "code": "EXE405",
+      "message": "expense list retrieval failed.",
+      "ariaLabel": "Notification: expense list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "EXE406",
+      "message": "expense details fetch failed.",
+      "ariaLabel": "Notification: expense details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "EXE407",
+      "message": "expense deletion failed.",
+      "ariaLabel": "Notification: expense deletion failed"
+    }
+  }
+}

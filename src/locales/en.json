@@ -1,0 +1,137 @@
+{
+    "common": {},
+    "success": {
+        "genericSuccess": {
+            "code": "SC001",
+            "message": "Action completed successfully.",
+            "ariaLabel": "Notification: Action completed successfully"
+        },
+        "CONTINUE": {
+            "code": 100,
+            "message": "Continue",
+            "ariaLabel": "Continue request processing"
+        },
+        "SWITCHING_PROTOCOLS": {
+            "code": 101,
+            "message": "Switching Protocols",
+            "ariaLabel": "Switching protocols"
+        },
+        "OK": {
+            "code": 200,
+            "message": "OK",
+            "ariaLabel": "Request succeeded"
+        },
+        "CREATED": {
+            "code": 201,
+            "message": "Created",
+            "ariaLabel": "Resource created successfully"
+        },
+        "ACCEPTED": {
+            "code": 202,
+            "message": "Accepted",
+            "ariaLabel": "Request accepted for processing"
+        },
+        "NO_CONTENT": {
+            "code": 204,
+            "message": "No Content",
+            "ariaLabel": "No content to send for this request"
+        }
+    },
+    "error": {
+        "genericError": {
+            "code": "ER500",
+            "message": "An unexpected error occurred.",
+            "ariaLabel": "Error: An unexpected error occurred"
+        },
+        "MOVED_PERMANENTLY": {
+            "code": 301,
+            "message": "Moved Permanently",
+            "ariaLabel": "Resource moved permanently"
+        },
+        "FOUND": {
+            "code": 302,
+            "message": "Found",
+            "ariaLabel": "Resource found at a different location"
+        },
+        "SEE_OTHER": {
+            "code": 303,
+            "message": "See Other",
+            "ariaLabel": "See another resource"
+        },
+        "NOT_MODIFIED": {
+            "code": 304,
+            "message": "Not Modified",
+            "ariaLabel": "Resource not modified"
+        },
+        "BAD_REQUEST": {
+            "code": 400,
+            "message": "Bad Request",
+            "ariaLabel": "Request was invalid or malformed"
+        },
+        "UNAUTHORIZED": {
+            "code": 401,
+            "message": "Unauthorized",
+            "ariaLabel": "Authentication required"
+        },
+        "FORBIDDEN": {
+            "code": 403,
+            "message": "Forbidden",
+            "ariaLabel": "Access to resource denied"
+        },
+        "NOT_FOUND": {
+            "code": 404,
+            "message": "Not Found",
+            "ariaLabel": "Requested resource not found"
+        },
+        "METHOD_NOT_ALLOWED": {
+            "code": 405,
+            "message": "Method Not Allowed",
+            "ariaLabel": "HTTP method not allowed"
+        },
+        "CONFLICT": {
+            "code": 409,
+            "message": "Conflict",
+            "ariaLabel": "Resource conflict detected"
+        },
+        "INTERNAL_SERVER_ERROR": {
+            "code": 500,
+            "message": "Internal Server Error",
+            "ariaLabel": "An unexpected error occurred"
+        },
+        "NOT_IMPLEMENTED": {
+            "code": 501,
+            "message": "Not Implemented",
+            "ariaLabel": "Feature not implemented"
+        },
+        "BAD_GATEWAY": {
+            "code": 502,
+            "message": "Bad Gateway",
+            "ariaLabel": "Invalid response from upstream server"
+        },
+        "SERVICE_UNAVAILABLE": {
+            "code": 503,
+            "message": "Service Unavailable",
+            "ariaLabel": "Service is currently unavailable"
+        },
+        "NO_TOKEN": {
+            "code": 401,
+            "message": "Unauthorized: No token provided",
+            "ariaLabel": "Notification: No token provided"
+        },
+        "DUPLICATE_RECORD": {
+            "code": 500,
+            "message": "Record already present in system.",
+            "ariaLabel": "Notification: Record already present in system."
+        },
+        "INVALID_REFRESH_TOKEN": {
+            "code": 400,
+            "message": "Invalid refesh token.",
+            "ariaLabel": "Notification: Invalid refesh token."
+        },
+        "FORBIDDEN_ROLE":{
+            "code": 403,
+            "message": "You are not authorize to perform this operation.",
+            "ariaLabel": "Notification: You are not authorize to perform this operation."
+        }
+    }
+}

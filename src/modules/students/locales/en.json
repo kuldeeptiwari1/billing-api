@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "STS001",
+      "message": "student created successfully.",
+      "ariaLabel": "Notification: student created successfully"
+    },
+    "updateSuccess": {
+      "code": "STS002",
+      "message": "student updated successfully.",
+      "ariaLabel": "Notification: student updated successfully"
+    },
+    "listSuccess": {
+      "code": "STS003",
+      "message": "student list retrieved successfully.",
+      "ariaLabel": "Notification: student list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "STS004",
+      "message": "student details fetched successfully.",
+      "ariaLabel": "Notification: student details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "STS005",
+      "message": "student deleted successfully.",
+      "ariaLabel": "Notification: student deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "STE404",
+      "message": "student not found.",
+      "ariaLabel": "Error: student not found"
+    },
+    "createFailed": {
+      "code": "STE403",
+      "message": "student not created.",
+      "ariaLabel": "Notification: student not created"
+    },
+    "updateFailed": {
+      "code": "STE402",
+      "message": "student update failed.",
+      "ariaLabel": "Notification: student update failed"
+    },
+    "listFailed": {
+      "code": "STE405",
+      "message": "student list retrieval failed.",
+      "ariaLabel": "Notification: student list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "STE406",
+      "message": "student details fetch failed.",
+      "ariaLabel": "Notification: student details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "STE407",
+      "message": "student deletion failed.",
+      "ariaLabel": "Notification: student deletion failed"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "RES001",
+      "message": "report created successfully.",
+      "ariaLabel": "Notification: report created successfully"
+    },
+    "updateSuccess": {
+      "code": "RES002",
+      "message": "report updated successfully.",
+      "ariaLabel": "Notification: report updated successfully"
+    },
+    "listSuccess": {
+      "code": "RES003",
+      "message": "report list retrieved successfully.",
+      "ariaLabel": "Notification: report list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "RES004",
+      "message": "report details fetched successfully.",
+      "ariaLabel": "Notification: report details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "RES005",
+      "message": "report deleted successfully.",
+      "ariaLabel": "Notification: report deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "REE404",
+      "message": "report not found.",
+      "ariaLabel": "Error: report not found"
+    },
+    "createFailed": {
+      "code": "REE403",
+      "message": "report not created.",
+      "ariaLabel": "Notification: report not created"
+    },
+    "updateFailed": {
+      "code": "REE402",
+      "message": "report update failed.",
+      "ariaLabel": "Notification: report update failed"
+    },
+    "listFailed": {
+      "code": "REE405",
+      "message": "report list retrieval failed.",
+      "ariaLabel": "Notification: report list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "REE406",
+      "message": "report details fetch failed.",
+      "ariaLabel": "Notification: report details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "REE407",
+      "message": "report deletion failed.",
+      "ariaLabel": "Notification: report deletion failed"
+    }
+  }
+}

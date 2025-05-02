@@ -1,0 +1,12 @@
+model user {
+  email      String   @unique
+  mobile     String   @unique
+  password   String
+  role       String   @default("user")
+  isDeleted  Boolean @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
+

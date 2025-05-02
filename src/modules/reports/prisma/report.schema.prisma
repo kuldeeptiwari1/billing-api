@@ -1,0 +1,12 @@
+model report {
+  name        String
+  email       String   @unique
+  phone       String   @unique
+  designation String
+  password    String
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("reports")
+}

@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "ROS001",
+      "message": "role created successfully.",
+      "ariaLabel": "Notification: role created successfully"
+    },
+    "updateSuccess": {
+      "code": "ROS002",
+      "message": "role updated successfully.",
+      "ariaLabel": "Notification: role updated successfully"
+    },
+    "listSuccess": {
+      "code": "ROS003",
+      "message": "role list retrieved successfully.",
+      "ariaLabel": "Notification: role list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "ROS004",
+      "message": "role details fetched successfully.",
+      "ariaLabel": "Notification: role details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "ROS005",
+      "message": "role deleted successfully.",
+      "ariaLabel": "Notification: role deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "ROE404",
+      "message": "role not found.",
+      "ariaLabel": "Error: role not found"
+    },
+    "createFailed": {
+      "code": "ROE403",
+      "message": "role not created.",
+      "ariaLabel": "Notification: role not created"
+    },
+    "updateFailed": {
+      "code": "ROE402",
+      "message": "role update failed.",
+      "ariaLabel": "Notification: role update failed"
+    },
+    "listFailed": {
+      "code": "ROE405",
+      "message": "role list retrieval failed.",
+      "ariaLabel": "Notification: role list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "ROE406",
+      "message": "role details fetch failed.",
+      "ariaLabel": "Notification: role details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "ROE407",
+      "message": "role deletion failed.",
+      "ariaLabel": "Notification: role deletion failed"
+    }
+  }
+}

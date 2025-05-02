@@ -1,0 +1,52 @@
+{
+    "moduleMapping": {
+      "tools": "tools",
+      "courses": "courses",
+      "users": "users",
+      "metas": "metas",
+      "settings": "settings",
+      "roles":"roles",
+      "mtr":"modulestorole",
+      "mcqs":"mcqs",
+      "auth":"auth",
+      "coursecategories":"coursecategories",
+      "faqs":"faqs",
+      "quizzes":"quizzes",
+      "subcoursetags":"subcoursetags",	
+      "banners":"banners",
+      "curriculums":"curriculums",
+      "gallery":"galleries",
+      "projects":"projects",
+      "ytvideos":"ytvideos"
+    },
+    "methodMapping": {
+      "GET": "read",
+      "POST": "write",
+      "PUT": "edit",
+      "DELETE": "delete",
+      "wildcard": "*"
+    },
+    "customOperations": {
+      "view": {
+        "method": "GET",
+        "pathPattern": "^/courses/[^/]+$",
+        "operation": "view"
+      },
+      "viewcourse": {
+        "method": "GET",
+        "pathPattern": "^/courses/[^/]+$",
+        "operation": "fetchdetail"
+      },
+      "export": {
+        "method": "GET",
+        "pathPattern": "^/.*?/export$",
+        "operation": "export"
+      },
+      "import": {
+        "method": "POST",
+        "pathPattern": "^/.*?/import$",
+        "operation": "import"
+      }
+    }
+  }
+  

@@ -1,0 +1,91 @@
+{
+  "success": {
+    "userCreated": {
+      "code": "AUS001",
+      "message": "User created successfully.",
+      "ariaLabel": "Notification: User created successfully"
+    },
+    "loginSuccess": {
+      "code": "AUS002",
+      "message": "Login successful.",
+      "ariaLabel": "Notification: Login successful"
+    },
+    "registerSuccess": {
+      "code": "AUS002",
+      "message": "Registration successful.",
+      "ariaLabel": "Notification: Registration successful"
+    },
+    "resetSuccess": {
+      "code": "AUS004",
+      "message": "Password reset successfully.",
+      "ariaLabel": "Notification: Password reset successfully"
+    },
+    "logoutSuccess": {
+      "code": "AUS005",
+      "message": "Logout successful.",
+      "ariaLabel": "Notification: Logout successful"
+    },
+    "profileSuccess": {
+      "code": "AUS006",
+      "message": "Profile get successful.",
+      "ariaLabel": "Notification: Profile get successful."
+    }
+  },
+  "error": {
+    "userNotFound": {
+      "code": "AUE404",
+      "message": "User not found.",
+      "ariaLabel": "Error: User not found"
+    },
+    "invalidCredentials": {
+      "code": "AUE403",
+      "message": "User not found or Invalid credentials.",
+      "ariaLabel": "Error: Invalid credentials"
+    },
+    "registerFailed": {
+      "code": "AUE002",
+      "message": "Registration Failed.",
+      "ariaLabel": "Notification: Registration Failed"
+    },
+    "loginFailed": {
+      "code": "AUE002",
+      "message": "Login Failed.",
+      "ariaLabel": "Notification: Login Failed"
+    },
+    "tokenFailed": {
+      "code": "AUE003",
+      "message": "Error while generateing tokens.",
+      "ariaLabel": "Notification: Error while generateing tokens"
+    },
+    "resetFailed": {
+      "code": "AUE004",
+      "message": "Password reset failed.",
+      "ariaLabel": "Notification: Password reset failed."
+    },
+    "logoutFailed": {
+      "code": "AUE005",
+      "message": "Logout failed.",
+      "ariaLabel": "Notification: Logout failed"
+    },
+    "duplicateUser": {
+      "code": "AUE006",
+      "message": "Duplicate user, registration failed.",
+      "ariaLabel": "Notification: Duplicate user, registration failed."
+    },
+    "profileFailed": {
+      "code": "AUE007",
+      "message": "Profile getting failed.",
+      "ariaLabel": "Notification: Profile getting failed."
+    },
+    "tokenMissing": {
+      "code": "AUE008",
+      "message": "Unauthorized: No token provided",
+      "ariaLabel": "Notification: No token provided"
+    },
+    "invalidToken": {
+      "code": "AUE009",
+      "message": "Invalid token please login again",
+      "ariaLabel": "Invalid token please login again"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "MTS001",
+      "message": "modules to role created successfully.",
+      "ariaLabel": "Notification: modules to role created successfully"
+    },
+    "updateSuccess": {
+      "code": "MTS002",
+      "message": "modules to role updated successfully.",
+      "ariaLabel": "Notification: modules to role updated successfully"
+    },
+    "listSuccess": {
+      "code": "MTS003",
+      "message": "modules to role list retrieved successfully.",
+      "ariaLabel": "Notification: modules to role list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "MTS004",
+      "message": "modules to role details fetched successfully.",
+      "ariaLabel": "Notification: modules to role details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "MTS005",
+      "message": "modules to role deleted successfully.",
+      "ariaLabel": "Notification: modules to role deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "MTE404",
+      "message": "modules to role not found.",
+      "ariaLabel": "Error: modules to role not found"
+    },
+    "createFailed": {
+      "code": "MTE403",
+      "message": "modules to role not created.",
+      "ariaLabel": "Notification: modules to role not created"
+    },
+    "updateFailed": {
+      "code": "MTE402",
+      "message": "modules to role update failed.",
+      "ariaLabel": "Notification: modules to role update failed"
+    },
+    "listFailed": {
+      "code": "MTE405",
+      "message": "modules to role list retrieval failed.",
+      "ariaLabel": "Notification: modules to role list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "MTE406",
+      "message": "modules to role details fetch failed.",
+      "ariaLabel": "Notification: modules to role details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "MTE407",
+      "message": "modules to role deletion failed.",
+      "ariaLabel": "Notification: modules to role deletion failed"
+    }
+  }
+}

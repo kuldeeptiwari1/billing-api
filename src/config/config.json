@@ -1,0 +1,22 @@
+{
+  "development": {
+    "database": {
+      "username": "",
+      "password": "",
+      "databaseName": "billing",
+      "host": "localhost:27017",
+      "dialect": "mongodb",
+      "operatorsAliases": 0
+    }
+  },
+  "production": {
+    "database": {
+      "username": "",
+      "password": "",
+      "databaseName": "billing?directConnection=true",
+      "host": "10.136.2.255:27017",
+      "dialect": "mongodb",
+      "operatorsAliases": 0
+    }
+  }
+}

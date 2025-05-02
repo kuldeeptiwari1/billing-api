@@ -1,0 +1,35 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+model expense {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  date                DateTime
+  cashExpense         String
+  bankExpense         String
+  paytmExpense        String
+  cashAmount          String
+  bankAmount          String
+  paytmAmount         String
+  networking          String
+  development         String
+  softskill           String
+  banking             String
+  placementNetworking String
+  cad                 String
+  total               String
+  totalExpense        String
+  totalCashback       String
+  grandTotal          String
+  isDeleted           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("expenses")
+}
