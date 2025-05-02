@@ -13,7 +13,7 @@ const options = {
 module.exports = {
   add: (httpRequest) => {
     const schema = Joi.object({
-      receiptNo: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      // receiptNo: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       receiptDate: Joi.date()
         .messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' })
         .required(),
@@ -48,7 +48,7 @@ module.exports = {
   },
   update: (httpRequest) => {
     const schema = Joi.object({
-      receiptNo: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      // receiptNo: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       receiptDate: Joi.date()
         .messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' })
         .required(),

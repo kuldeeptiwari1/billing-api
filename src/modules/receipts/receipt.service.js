@@ -3,10 +3,35 @@ const prisma = new RECEIPTPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const ReceiptService = {
-  
   add: async (data) => {
     try {
-      const record = await prisma.receipt.create({ data });
+      //find existing receipt no
+      const latestReceipt = await prisma.receipt.findFirst({
+        orderBy: { receiptNo: 'desc' },
+        select: { receiptNo: true },
+        where: {
+          isDeleted: false,
+        },
+      });
+  
+      //generate receipt no
+      let newNumber = 1;
+      if (latestReceipt?.receiptNo) {
+        const parts = latestReceipt.receiptNo.split('-');
+        if (parts.length === 2 && !isNaN(parts[1])) {
+          // newNumber = parseInt(parts[1]) + Math.floor(100000 + Math.random() * 900000);
+          newNumber = parseInt(parts[1]) + 1;
+        }
+      }
+     const receiptNo = `RCT-${newNumber.toString().padStart(5, '0')}`;
+  
+      const record = await prisma.receipt.create({
+        data: {
+          ...data,
+          receiptNo,
+        },
+      });
+  
       return {
         data: record,
         statusCode: 201,
@@ -25,8 +50,8 @@ const ReceiptService = {
       };
     }
   },
-  
-  
+
+
   list: async (params) => {
     try {
       // If no params, return all records without filtering
@@ -99,7 +124,6 @@ const ReceiptService = {
       };
     }
   },
-
 
   view: async (id) => {
     try {

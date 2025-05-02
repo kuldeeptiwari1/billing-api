@@ -9,28 +9,30 @@ generator client {
 }
 
 model student {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  email          String   @unique
-  phone          String   @unique
-  gender         String
-  state          String
-  city           String
-  courseName     String
-  contactPerson  String
-  modeOfClass    String
-  totalFees      String
-  paidAmount     String
-  remainingFees  String
-  dueDate        DateTime
-  preferredBatch String
-  paymentType    String
-  documentType   String
-  documentNo     String
-  profession     String
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String   @unique
+  phone           String   @unique
+  gender          String
+  state           String
+  city            String
+  courseName      String
+  contactPerson   String
+  modeOfClass     String
+  department      String
+  totalFees       String
+  paidAmount      String
+  remainingFees   String
+  dueDate         DateTime
+  preferredBranch String
+  paymentType     String
+  documentType    String
+  documentNo      String
+  profession      String
+  preferredBatch  String
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@map("students")
 }

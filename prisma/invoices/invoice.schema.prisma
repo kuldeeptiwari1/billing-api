@@ -9,20 +9,21 @@ generator client {
 }
 
 model invoice {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  invoiceNo     String   @unique
-  studentName   String
-  phone         String   @unique
-  contactPerson String
-  issueDate     DateTime
-  dueDate       DateTime
-  status        String
-  totalAmount   String
-  paidAmount    String
-  dueAmount     String
-  isDeleted     Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceNo      String   @unique
+  studentName    String
+  counsellorName String
+  phone          String   @unique
+  contactPerson  String
+  status         String
+  totalAmount    String
+  paidAmount     String
+  issueDate      DateTime
+  dueDate        DateTime
+  course         String
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@map("invoices")
 }

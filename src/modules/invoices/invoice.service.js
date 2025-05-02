@@ -1,12 +1,38 @@
-const { PrismaClient : INVOICEPrisma } = require('../../../prisma/invoices/generated');
+const { PrismaClient: INVOICEPrisma } = require('../../../prisma/invoices/generated');
 const prisma = new INVOICEPrisma();
+
+const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
+const courseprisma = new COURSEPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const InvoiceService = {
-  
   add: async (data) => {
+    //find existing invoice no
+    const latestInvoice = await prisma.invoice.findFirst({
+      orderBy: { invoiceNo: 'desc' },
+      select: { invoiceNo: true },
+      where: { isDeleted: false }
+    });
+
+    //generate random invoice no
+    let newNumber = 1;
+    if (latestInvoice?.invoiceNo) {
+      const parts = latestInvoice.invoiceNo.split('-');
+      if (parts.length === 2 && !isNaN(parts[1])) {
+        newNumber = parseInt(parts[1]) + 1;
+      }
+    }
+
+    const invoiceNo = `INV-${newNumber.toString().padStart(5, '0')}`;
+
     try {
-      const record = await prisma.invoice.create({ data });
+      const record = await prisma.invoice.create({
+        data: {
+          ...data,
+          invoiceNo
+        }
+      });
       return {
         data: record,
         statusCode: 201,
@@ -25,56 +51,55 @@ const InvoiceService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
       // If no params, return all records without filtering
       if (!params) {
         const allRecords = await prisma.invoice.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
+          orderBy: { createdAt: 'desc' } // Sort by newest first
         });
-  
+
         return {
           data: allRecords,
           statusCode: 200,
           isError: false,
           message: getMessage('en', 'success', 'listSuccess', 'invoices'),
-          errorStack: null,
+          errorStack: null
         };
       }
-  
+
       // Destructure params with default values
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
+
       // Pagination logic
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
-  
+
       // Default filter conditions (only fetch non-deleted invoices by default)
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true // Ensure boolean conversion
       };
-  
+
       // Handle search filter
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive' // Case-insensitive search
         };
       }
-  
+
       // Fetch filtered & paginated records
       const records = await prisma.invoice.findMany({
         where: whereCondition,
         skip,
         take,
-        orderBy: { createdAt: sort }, // Newest first
+        orderBy: { createdAt: sort } // Newest first
       });
-  
+
       // Get total count for pagination
       const totalCount = await prisma.invoice.count({ where: whereCondition });
-  
+
       return {
         data: records,
         statusCode: 200,
@@ -85,8 +110,8 @@ const InvoiceService = {
           total: totalCount,
           page: parseInt(page),
           limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching invoice failed:', error);
@@ -95,29 +120,48 @@ const InvoiceService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'invoices'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
-      const record = await prisma.invoice.findUnique({ where: { id } });
-      if (!record) {
+      const invoice = await prisma.invoice.findUnique({ where: { id } });
+
+      if (!invoice) {
+        console.warn('Invoice not found for id:', id);
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'invoices'),
+          message: getMessage('en', 'error', 'recordNotFound', 'invoices'),
           errorStack: null
         };
       }
+      const courseIds = invoice.course ? invoice.course.split(',').map(tag => tag.trim()) : [];
+
+      const invoiceCourses = courseIds.length
+        ? await courseprisma.course.findMany({ where: { id: { in: courseIds } } })
+        : [];
+
       return {
-        data: record,
+        data: {
+          invoiceNo: invoice.invoiceNo,
+          studentName: invoice.studentName,
+          counsellorName: invoice.counsellorName,
+          phone: invoice.phone,
+          contactPerson: invoice.contactPerson,
+          status: invoice.status,
+          totalAmount: invoice.totalAmount,
+          paidAmount: invoice.paidAmount,
+          issueDate: invoice.issueDate,
+          dueDate: invoice.dueDate,
+          courses: invoiceCourses
+        },
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'invoices'),
+        message: getMessage('en', 'success', 'viewSuccess', 'invoices'),
         errorStack: null
       };
     } catch (error) {

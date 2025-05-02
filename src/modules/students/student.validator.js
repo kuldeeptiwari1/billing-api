@@ -28,6 +28,9 @@ module.exports = {
       modeOfClass: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
+      department: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+        .required(),
       totalFees: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       paidAmount: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
@@ -36,7 +39,7 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       dueDate: Joi.date().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
-      preferredBatch: Joi.string()
+      preferredBranch: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       paymentType: Joi.string()
@@ -49,6 +52,9 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       profession: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+        .required(),
+      preferredBatch: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       isDeleted: Joi.boolean()
@@ -74,6 +80,9 @@ module.exports = {
       modeOfClass: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
+      department: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+        .required(),
       totalFees: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       paidAmount: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
@@ -82,7 +91,7 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       dueDate: Joi.date().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
-      preferredBatch: Joi.string()
+      preferredBranch: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       paymentType: Joi.string()
@@ -95,6 +104,9 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       profession: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+        .required(),
+      preferredBatch: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       isDeleted: Joi.boolean()

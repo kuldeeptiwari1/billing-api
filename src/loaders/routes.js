@@ -46,6 +46,30 @@ const routes = [
     path: '/reports',
     route: ReportRoutes
   },
+  {
+    path: '/courses',
+    route: CourseRoutes
+  },
+  {
+    path: '/expenses',
+    route: ExpenseRoutes
+  },
+  {
+    path: '/invoices',
+    route: InvoiceRoutes
+  },
+  {
+    path: '/receipts',
+    route: ReceiptRoutes
+  },
+  {
+    path: '/reports',
+    route: ReportRoutes
+  },
+  {
+    path: '/students',
+    route: StudentRoutes
+  },
 ];
 
 /**
