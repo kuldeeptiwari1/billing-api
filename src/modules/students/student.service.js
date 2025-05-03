@@ -7,7 +7,7 @@ const courseprisma = new COURSEPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const StudentService = {
-  
+
   add: async (data) => {
     try {
       const record = await prisma.student.create({ data });
@@ -33,7 +33,7 @@ const StudentService = {
   list: async (params) => {
     try {
       // If no params, return all records without filtering
-      if (!params) {
+      if (!params || Object.keys(params).length === 0) {
         const allRecords = await prisma.student.findMany({
           orderBy: { createdAt: 'desc' }, // Sort by newest first
         });
@@ -51,8 +51,9 @@ const StudentService = {
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
   
       // Pagination logic
-      const skip = (page - 1) * limit;
-      const take = parseInt(limit);
+      const parsedLimit = parseInt(limit);
+      const parsedPage = parseInt(page);
+      const skip = (parsedPage - 1) * parsedLimit;
   
       // Default filter conditions (only fetch non-deleted students by default)
       let whereCondition = {
@@ -68,15 +69,15 @@ const StudentService = {
       }
   
       // Fetch filtered & paginated records
-      const records = await prisma.student.findMany({
-        where: whereCondition,
-        skip,
-        take,
-        orderBy: { createdAt: sort }, // Newest first
-      });
-  
-      // Get total count for pagination
-      const totalCount = await prisma.student.count({ where: whereCondition });
+      const [records, totalCount] = await Promise.all([
+        prisma.student.findMany({
+          where: whereCondition,
+          skip,
+          take: parsedLimit,
+          orderBy: { createdAt: sort }
+        }),
+        prisma.student.count({ where: whereCondition })
+      ]);
   
       return {
         data: records,
@@ -86,8 +87,8 @@ const StudentService = {
         errorStack: null,
         pagination: {
           total: totalCount,
-          page: parseInt(page),
-          limit: take,
+          page: parsedPage,
+          limit: parsedLimit,
           totalPages: Math.ceil(totalCount / take),
         },
       };

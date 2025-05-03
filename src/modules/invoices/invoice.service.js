@@ -58,7 +58,7 @@ const InvoiceService = {
   list: async (params) => {
     try {
       // If no params, return all records without filtering
-      if (!params) {
+      if (!params || Object.keys(params).length === 0) {
         const allRecords = await prisma.invoice.findMany({
           orderBy: { createdAt: 'desc' } // Sort by newest first
         });
@@ -76,8 +76,9 @@ const InvoiceService = {
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
 
       // Pagination logic
-      const skip = (page - 1) * limit;
-      const take = parseInt(limit);
+      const parsedLimit = parseInt(limit);
+      const parsedPage = parseInt(page);
+      const skip = (parsedPage - 1) * parsedLimit;
 
       // Default filter conditions (only fetch non-deleted invoices by default)
       let whereCondition = {
@@ -93,15 +94,16 @@ const InvoiceService = {
       }
 
       // Fetch filtered & paginated records
-      const records = await prisma.invoice.findMany({
-        where: whereCondition,
-        skip,
-        take,
-        orderBy: { createdAt: sort } // Newest first
-      });
+      const [records, totalCount] = await Promise.all([
+        prisma.invoice.findMany({
+          where: whereCondition,
+          skip,
+          take: parsedLimit,
+          orderBy: { createdAt: sort }
+        }),
+        prisma.invoice.count({ where: whereCondition })
+      ]);
 
-      // Get total count for pagination
-      const totalCount = await prisma.invoice.count({ where: whereCondition });
 
       return {
         data: records,
@@ -111,8 +113,8 @@ const InvoiceService = {
         errorStack: null,
         pagination: {
           total: totalCount,
-          page: parseInt(page),
-          limit: take,
+          page: parsedPage,
+          limit: parsedLimit,
           totalPages: Math.ceil(totalCount / take)
         }
       };
@@ -142,16 +144,14 @@ const InvoiceService = {
           errorStack: null
         };
       }
+
       const courseIds = invoice.course ? invoice.course.split(',').map((tag) => tag.trim()) : [];
       const studentIds = invoice.studentName ? invoice.studentName.split(',').map((tag) => tag.trim()) : [];
 
-      const invoiceCourses = courseIds.length
-        ? await courseprisma.course.findMany({ where: { id: { in: courseIds } } })
-        : [];
-
-      const invoiceStudents = studentIds.length
-        ? await studentprisma.student.findMany({ where: { id: { in: studentIds } } })
-        : [];
+      const [invoiceCourses, invoiceStudents] = await Promise.all([
+        courseIds.length ? courseprisma.course.findMany({ where: { id: { in: courseIds } } }) : [],
+        studentIds.length ? studentprisma.student.findMany({ where: { id: { in: studentIds } } }) : []
+      ]);
 
       return {
         data: {
@@ -192,6 +192,23 @@ const InvoiceService = {
 
   update: async (id, data) => {
     try {
+
+      if (data.invoiceNo) {
+        const existingInvoice = await prisma.invoice.findUnique({
+          where: { invoiceNo:data.invoiceNo}
+        });
+
+        if (existingInvoice && String(existingInvoice.id) !== String(id)) {
+          return {
+            data: null,
+            statusCode: 400,
+            isError: true,
+            message: getMessage('en', 'error', 'DUPLICATE_RECORD'),
+            errorStack: null
+          };
+        }
+      }
+
       const record = await prisma.invoice.update({ where: { id }, data });
       return {
         data: record,

@@ -24,8 +24,9 @@ module.exports = {
       issueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       dueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       course: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      taxPercentage: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      taxPercentage: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' }),
+      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }),
       baseAmount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       totalDiscount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       subtotal: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
@@ -49,7 +50,8 @@ module.exports = {
       issueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       dueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       course: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      taxPercentage: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      taxPercentage: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       baseAmount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       totalDiscount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
