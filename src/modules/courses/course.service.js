@@ -69,7 +69,7 @@ const CourseService = {
 
       // Fetch filtered & paginated records
       const [records, totalCount] = await Promise.all([
-        prisma.receipt.findMany({
+        prisma.course.findMany({
           where: whereCondition,
           skip,
           take: parsedLimit,

@@ -74,7 +74,7 @@ const EnquiryService = {
   
       // Fetch filtered & paginated records
       const [records, totalCount] = await Promise.all([
-        prisma.invoice.findMany({
+        prisma.enquiry.findMany({
           where: whereCondition,
           skip,
           take: parsedLimit,
