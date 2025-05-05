@@ -115,7 +115,7 @@ const ReceiptService = {
           total: totalCount,
           page: parsedPage,
           limit: parsedLimit,
-          totalPages: Math.ceil(totalCount / take)
+          totalPages: Math.ceil(totalCount / parsedLimit)
         }
       };
     } catch (error) {
