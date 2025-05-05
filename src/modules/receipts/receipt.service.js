@@ -1,9 +1,6 @@
 const { PrismaClient: RECEIPTPrisma } = require('../../../prisma/receipts/generated');
 const prisma = new RECEIPTPrisma();
 
-// const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
-// const studentprisma = new STUDENTPrisma();
-
 const { getMessage } = require('../../utils/constant');
 
 const ReceiptService = {
@@ -133,17 +130,9 @@ const ReceiptService = {
           errorStack: null
         };
       }
-
-      // const studentIds = receipt.studentName ? receipt.studentName.split(',').map((tag) => tag.trim()) : [];
-
-      // const receiptStudents = studentIds.length
-      //   ? await studentprisma.student.findMany({ where: { id: { in: studentIds } } })
-      //   : [];
-
       return {
         data: {
           ...receipt,
-          // studentName: receiptStudents
         },
         statusCode: 200,
         isError: false,
