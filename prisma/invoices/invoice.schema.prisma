@@ -9,27 +9,22 @@ generator client {
 }
 
 model invoice {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  invoiceNo      String   @unique
-  studentName    String
-  counsellorName String
-  phone          String   @unique
-  contactPerson  String
-  status         String
-  totalAmount    String
-  paidAmount     String
-  issueDate      DateTime
-  dueDate        DateTime
-  course         String
-  taxPercentage  String   @default("NA")
-  discount       String   @default("NA")
-  baseAmount     String
-  totalDiscount  String
-  subtotal       String
-  totalTaxes     String
-  isDeleted      Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  invoiceNo     String   @unique
+  studentName   String
+  status        String
+  issueDate     DateTime
+  course        String
+  taxPercentage String   @default("NA")
+  discount      String   @default("NA")
+  baseAmount    String
+  totalDiscount String
+  subtotal      String
+  totalTaxes    String
+  finalAmount   String
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("invoices")
 }

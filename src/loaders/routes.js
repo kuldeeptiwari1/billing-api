@@ -8,6 +8,7 @@ const { ExpenseRoutes } = require('../modules/expenses/expense.module');
 const { InvoiceRoutes } = require('../modules/invoices/invoice.module');
 const { ReceiptRoutes } = require('../modules/receipts/receipt.module');
 const { ReportRoutes } = require('../modules/reports/report.module');
+const { EnquiryRoutes } = require('../modules/enquiries/enquiry.module');
 const API_PREFIX = '/api/v1';
 const routes = [
 {
@@ -47,28 +48,8 @@ const routes = [
     route: ReportRoutes
   },
   {
-    path: '/courses',
-    route: CourseRoutes
-  },
-  {
-    path: '/expenses',
-    route: ExpenseRoutes
-  },
-  {
-    path: '/invoices',
-    route: InvoiceRoutes
-  },
-  {
-    path: '/receipts',
-    route: ReceiptRoutes
-  },
-  {
-    path: '/reports',
-    route: ReportRoutes
-  },
-  {
-    path: '/students',
-    route: StudentRoutes
+    path: '/enquiries',
+    route: EnquiryRoutes
   },
 ];
 

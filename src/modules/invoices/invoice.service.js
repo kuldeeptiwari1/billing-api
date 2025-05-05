@@ -155,23 +155,9 @@ const InvoiceService = {
 
       return {
         data: {
-          invoiceNo: invoice.invoiceNo,
-          studentName: invoiceStudents,
-          counsellorName: invoice.counsellorName,
-          phone: invoice.phone,
-          contactPerson: invoice.contactPerson,
-          status: invoice.status,
-          totalAmount: invoice.totalAmount,
-          paidAmount: invoice.paidAmount,
-          issueDate: invoice.issueDate,
-          dueDate: invoice.dueDate,
-          courses: invoiceCourses,
-          taxPercentage: invoice.taxPercentage,
-          discount: invoice.discount,
-          baseAmount: invoice.baseAmount,
-          totalDiscount: invoice.totalAmount,
-          subtotal: invoice.subtotal,
-          totalTaxes: invoice.totalTaxes
+          ...invoice,
+          course:invoiceCourses,
+          studentName: invoiceStudents
         },
         statusCode: 200,
         isError: false,

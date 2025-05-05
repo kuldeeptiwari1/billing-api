@@ -1,37 +1,33 @@
-const { PrismaClient : RECEIPTPrisma } = require('../../../prisma/receipts/generated');
+const { PrismaClient: RECEIPTPrisma } = require('../../../prisma/receipts/generated');
 const prisma = new RECEIPTPrisma();
+
+// const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
+// const studentprisma = new STUDENTPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const ReceiptService = {
   add: async (data) => {
     try {
-      //find existing receipt no
+      //find existing invoice no
       const latestReceipt = await prisma.receipt.findFirst({
         orderBy: { receiptNo: 'desc' },
         select: { receiptNo: true },
-        where: {
-          isDeleted: false,
-        },
+        where: { isDeleted: false }
       });
-  
-      //generate receipt no
+
+      //generate random invoice no
       let newNumber = 1;
       if (latestReceipt?.receiptNo) {
         const parts = latestReceipt.receiptNo.split('-');
         if (parts.length === 2 && !isNaN(parts[1])) {
-          // newNumber = parseInt(parts[1]) + Math.floor(100000 + Math.random() * 900000);
           newNumber = parseInt(parts[1]) + 1;
         }
       }
-     const receiptNo = `RCT-${newNumber.toString().padStart(5, '0')}`;
-  
-      const record = await prisma.receipt.create({
-        data: {
-          ...data,
-          receiptNo,
-        },
-      });
-  
+
+      const receiptNo = `INV-${newNumber.toString().padStart(5, '0')}`;
+
+      const record = await prisma.receipt.create({ data: { ...data, receiptNo } });
       return {
         data: record,
         statusCode: 201,
@@ -51,55 +47,55 @@ const ReceiptService = {
     }
   },
 
-
   list: async (params) => {
     try {
       // If no params, return all records without filtering
-      if (!params) {
+      if (!params || Object.keys(params).length === 0) {
         const allRecords = await prisma.receipt.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
+          orderBy: { createdAt: 'desc' } // Sort by newest first
         });
-  
+
         return {
           data: allRecords,
           statusCode: 200,
           isError: false,
           message: getMessage('en', 'success', 'listSuccess', 'receipts'),
-          errorStack: null,
+          errorStack: null
         };
       }
-  
+
       // Destructure params with default values
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
+
       // Pagination logic
-      const skip = (page - 1) * limit;
-      const take = parseInt(limit);
-  
+      const parsedLimit = parseInt(limit);
+      const parsedPage = parseInt(page);
+      const skip = (parsedPage - 1) * parsedLimit;
+
       // Default filter conditions (only fetch non-deleted receipts by default)
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true // Ensure boolean conversion
       };
-  
+
       // Handle search filter
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive' // Case-insensitive search
         };
       }
-  
+
       // Fetch filtered & paginated records
-      const records = await prisma.receipt.findMany({
-        where: whereCondition,
-        skip,
-        take,
-        orderBy: { createdAt: sort }, // Newest first
-      });
-  
-      // Get total count for pagination
-      const totalCount = await prisma.receipt.count({ where: whereCondition });
-  
+      const [records, totalCount] = await Promise.all([
+        prisma.receipt.findMany({
+          where: whereCondition,
+          skip,
+          take: parsedLimit,
+          orderBy: { createdAt: sort }
+        }),
+        prisma.receipt.count({ where: whereCondition })
+      ]);
+
       return {
         data: records,
         statusCode: 200,
@@ -108,10 +104,10 @@ const ReceiptService = {
         errorStack: null,
         pagination: {
           total: totalCount,
-          page: parseInt(page),
-          limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          page: parsedPage,
+          limit: parsedLimit,
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching receipt failed:', error);
@@ -120,15 +116,15 @@ const ReceiptService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'receipts'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
   view: async (id) => {
     try {
-      const record = await prisma.receipt.findUnique({ where: { id } });
-      if (!record) {
+      const receipt = await prisma.receipt.findUnique({ where: { id } });
+      if (!receipt) {
         return {
           data: null,
           statusCode: 404,
@@ -137,8 +133,18 @@ const ReceiptService = {
           errorStack: null
         };
       }
+
+      // const studentIds = receipt.studentName ? receipt.studentName.split(',').map((tag) => tag.trim()) : [];
+
+      // const receiptStudents = studentIds.length
+      //   ? await studentprisma.student.findMany({ where: { id: { in: studentIds } } })
+      //   : [];
+
       return {
-        data: record,
+        data: {
+          ...receipt,
+          // studentName: receiptStudents
+        },
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'recordNotFound', 'receipts'),
@@ -158,6 +164,22 @@ const ReceiptService = {
 
   update: async (id, data) => {
     try {
+      if (data.receiptNo) {
+        const existingReceipt = await prisma.receipt.findUnique({
+          where: { receiptNo: data.receiptNo }
+        });
+
+        if (existingReceipt && String(existingReceipt.id) !== String(id)) {
+          return {
+            data: null,
+            statusCode: 400,
+            isError: true,
+            message: getMessage('en', 'error', 'DUPLICATE_RECORD'),
+            errorStack: null
+          };
+        }
+      }
+
       const record = await prisma.receipt.update({ where: { id }, data });
       return {
         data: record,

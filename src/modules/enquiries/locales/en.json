@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "ENS001",
+      "message": "enquiry created successfully.",
+      "ariaLabel": "Notification: enquiry created successfully"
+    },
+    "updateSuccess": {
+      "code": "ENS002",
+      "message": "enquiry updated successfully.",
+      "ariaLabel": "Notification: enquiry updated successfully"
+    },
+    "listSuccess": {
+      "code": "ENS003",
+      "message": "enquiry list retrieved successfully.",
+      "ariaLabel": "Notification: enquiry list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "ENS004",
+      "message": "enquiry details fetched successfully.",
+      "ariaLabel": "Notification: enquiry details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "ENS005",
+      "message": "enquiry deleted successfully.",
+      "ariaLabel": "Notification: enquiry deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "ENE404",
+      "message": "enquiry not found.",
+      "ariaLabel": "Error: enquiry not found"
+    },
+    "createFailed": {
+      "code": "ENE403",
+      "message": "enquiry not created.",
+      "ariaLabel": "Notification: enquiry not created"
+    },
+    "updateFailed": {
+      "code": "ENE402",
+      "message": "enquiry update failed.",
+      "ariaLabel": "Notification: enquiry update failed"
+    },
+    "listFailed": {
+      "code": "ENE405",
+      "message": "enquiry list retrieval failed.",
+      "ariaLabel": "Notification: enquiry list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "ENE406",
+      "message": "enquiry details fetch failed.",
+      "ariaLabel": "Notification: enquiry details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "ENE407",
+      "message": "enquiry deletion failed.",
+      "ariaLabel": "Notification: enquiry deletion failed"
+    }
+  }
+}

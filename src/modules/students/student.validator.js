@@ -57,6 +57,9 @@ module.exports = {
       preferredBatch: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
+      counsellorName: Joi.string()
+      .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+      .required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)
@@ -107,6 +110,9 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       preferredBatch: Joi.string()
+        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
+        .required(),
+      counsellorName: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       isDeleted: Joi.boolean()

@@ -29,10 +29,7 @@ module.exports = {
       courseDescription: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      taxPercentage: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      price: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)
@@ -57,10 +54,7 @@ module.exports = {
       courseDescription: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      taxPercentage: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
+      price: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)

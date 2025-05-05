@@ -15,9 +15,8 @@ model course {
   department        String
   duration          DateTime
   courseFees        String
-  taxPercentage     String @default("NA")
-  discount          String @default("NA")
   courseDescription String
+  price             String
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

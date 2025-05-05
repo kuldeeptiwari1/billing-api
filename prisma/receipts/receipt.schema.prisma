@@ -9,23 +9,38 @@ generator client {
 }
 
 model receipt {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  receiptNo      String   @unique
-  receiptDate    DateTime
-  studentName    String
-  phone          String   @unique
-  course         String
-  totalAmount    String
-  paidAmount     String
-  dueAmount      String
-  paymentMode    String
-  paymentDetails String
-  dueDate        DateTime
-  contactPerson  String
-  notes          String
-  isDeleted      Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  receiptNo           String   @unique
+  receiptDate         DateTime
+  studentName         String
+  phone               String   
+  email               String
+  course              String
+  totalAmount         String
+  paidReceiptAmount   String
+  paidAmount          String
+  remainingAmount     String
+  fineAmount          String
+  selectSeries        String
+  contactPerson1      String
+  contactPersonNo1    String
+  contactPersonEmail1 String
+  contactPerson2      String
+  contactPersonNo2    String
+  contactPersonEmail2 String
+  paymentMode         String
+  bankType            String
+  paytmAccount        String
+  feesDueDate         DateTime
+  bookIssue           String
+  bookCode            String
+  ReceiptType         String
+  paymentDetails      String
+  dueDate             DateTime
+  notes               String
+  isDeleted           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   @@map("receipts")
 }
