@@ -10,6 +10,9 @@ const departmentprisma = new DEPARTMENTPrisma();
 const { PrismaClient: BRANCHPrisma } = require('../../../prisma/branches/generated');
 const branchprisma = new BRANCHPrisma();
 
+const { PrismaClient: MODEOFPAYMENTPrisma } = require('../../../prisma/modeofpayments/generated');
+const modeofpaymentsprisma = new MODEOFPAYMENTPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const StudentService = {
@@ -125,11 +128,15 @@ const StudentService = {
       const courseIds = student.courseName ? student.courseName.split(',').map((tag) => tag.trim()) : [];
       const departmentIds = student.department ? student.department.split(',').map((tag) => tag.trim()) : [];
       const branchIds = student.preferredBranch ? student.preferredBranch.split(',').map((tag) => tag.trim()) : [];
+      const paymentModeIds = student.paymentType ? student.paymentType.split(',').map((tag) => tag.trim()) : [];
 
-      const [courses, department, preferredBranch] = await Promise.all([
+      const [courses, department, preferredBranch, modeofpayments] = await Promise.all([
         courseIds.length ? courseprisma.course.findMany({ where: { id: { in: courseIds } } }) : [],
         departmentIds.length ? departmentprisma.department.findMany({ where: { id: { in: departmentIds } } }) : [],
-        branchIds.length ? branchprisma.branch.findMany({ where: { id: { in: branchIds } } }) : []
+        branchIds.length ? branchprisma.branch.findMany({ where: { id: { in: branchIds } } }) : [],
+        paymentModeIds.length
+          ? modeofpaymentsprisma.modeofpayment.findMany({ where: { id: { in: paymentModeIds } } })
+          : []
       ]);
 
       return {
@@ -137,7 +144,8 @@ const StudentService = {
           ...student,
           courseName: courses,
           department: department,
-          preferredBranch: preferredBranch
+          preferredBranch: preferredBranch,
+          paymentType: modeofpayments
         },
         statusCode: 200,
         isError: false,
