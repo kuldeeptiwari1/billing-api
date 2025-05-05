@@ -1,6 +1,18 @@
 const { PrismaClient: RECEIPTPrisma } = require('../../../prisma/receipts/generated');
 const prisma = new RECEIPTPrisma();
 
+const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
+const courseprisma = new COURSEPrisma();
+
+const { PrismaClient: MODEOFPAYMENTPrisma } = require('../../../prisma/modeofpayments/generated');
+const modeofpaymentprisma = new MODEOFPAYMENTPrisma();
+
+const { PrismaClient: BANKTYPEPrisma } = require('../../../prisma/banktypes/generated');
+const banktypeprisma = new BANKTYPEPrisma();
+
+const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
+const studentprisma = new STUDENTPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const ReceiptService = {
@@ -130,9 +142,29 @@ const ReceiptService = {
           errorStack: null
         };
       }
+
+      const courseIds = receipt.course ? receipt.course.split(',').map((tag) => tag.trim()) : [];
+      const modeofpaymentIds = receipt.paymentMode ? receipt.paymentMode.split(',').map((tag) => tag.trim()) : [];
+      const banktypeIds = receipt.bankType ? receipt.bankType.split(',').map((tag) => tag.trim()) : [];
+      const studentIds = receipt.studentName ? receipt.studentName.split(',').map((tag) => tag.trim()) : [];
+
+
+      const [courses, paymentMode, bankType, student] = await Promise.all([
+        courseIds.length ? courseprisma.course.findMany({ where: { id: { in: courseIds } } }) : [],
+        modeofpaymentIds.length
+          ? modeofpaymentprisma.modeofpayment.findMany({ where: { id: { in: modeofpaymentIds } } })
+          : [],
+        banktypeIds.length ? banktypeprisma.banktype.findMany({ where: { id: { in: banktypeIds } } }) : [],
+        studentIds.length ? studentprisma.student.findMany({ where: { id: { in: studentIds } } }) : []
+      ]);
+
       return {
         data: {
           ...receipt,
+          course: courses,
+          paymentMode: paymentMode,
+          bankType: bankType,
+          studentName:student
         },
         statusCode: 200,
         isError: false,

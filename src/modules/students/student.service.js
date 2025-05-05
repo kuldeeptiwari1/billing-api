@@ -1,13 +1,18 @@
-const { PrismaClient : STUDENTPrisma } = require('../../../prisma/students/generated');
+const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
 const prisma = new STUDENTPrisma();
 
 const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
 const courseprisma = new COURSEPrisma();
 
+const { PrismaClient: DEPARTMENTPrisma } = require('../../../prisma/departments/generated');
+const departmentprisma = new DEPARTMENTPrisma();
+
+const { PrismaClient: BRANCHPrisma } = require('../../../prisma/branches/generated');
+const branchprisma = new BRANCHPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const StudentService = {
-
   add: async (data) => {
     try {
       const record = await prisma.student.create({ data });
@@ -29,45 +34,45 @@ const StudentService = {
       };
     }
   },
-  
+
   list: async (params) => {
     try {
       // If no params, return all records without filtering
       if (!params || Object.keys(params).length === 0) {
         const allRecords = await prisma.student.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
+          orderBy: { createdAt: 'desc' } // Sort by newest first
         });
-  
+
         return {
           data: allRecords,
           statusCode: 200,
           isError: false,
           message: getMessage('en', 'success', 'listSuccess', 'students'),
-          errorStack: null,
+          errorStack: null
         };
       }
-  
+
       // Destructure params with default values
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
+
       // Pagination logic
       const parsedLimit = parseInt(limit);
       const parsedPage = parseInt(page);
       const skip = (parsedPage - 1) * parsedLimit;
-  
+
       // Default filter conditions (only fetch non-deleted students by default)
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true // Ensure boolean conversion
       };
-  
+
       // Handle search filter
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive' // Case-insensitive search
         };
       }
-  
+
       // Fetch filtered & paginated records
       const [records, totalCount] = await Promise.all([
         prisma.student.findMany({
@@ -78,7 +83,7 @@ const StudentService = {
         }),
         prisma.student.count({ where: whereCondition })
       ]);
-  
+
       return {
         data: records,
         statusCode: 200,
@@ -89,8 +94,8 @@ const StudentService = {
           total: totalCount,
           page: parsedPage,
           limit: parsedLimit,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching student failed:', error);
@@ -99,7 +104,7 @@ const StudentService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'students'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
@@ -118,14 +123,21 @@ const StudentService = {
       }
 
       const courseIds = student.courseName ? student.courseName.split(',').map((tag) => tag.trim()) : [];
-      const courses = courseIds.length
-        ? await courseprisma.course.findMany({ where: { id: { in: courseIds } } })
-        : [];
+      const departmentIds = student.department ? student.department.split(',').map((tag) => tag.trim()) : [];
+      const branchIds = student.preferredBranch ? student.preferredBranch.split(',').map((tag) => tag.trim()) : [];
+
+      const [courses, department, preferredBranch] = await Promise.all([
+        courseIds.length ? courseprisma.course.findMany({ where: { id: { in: courseIds } } }) : [],
+        departmentIds.length ? departmentprisma.department.findMany({ where: { id: { in: departmentIds } } }) : [],
+        branchIds.length ? branchprisma.branch.findMany({ where: { id: { in: branchIds } } }) : []
+      ]);
 
       return {
         data: {
           ...student,
-          courseName: courses
+          courseName: courses,
+          department: department,
+          preferredBranch: preferredBranch
         },
         statusCode: 200,
         isError: false,

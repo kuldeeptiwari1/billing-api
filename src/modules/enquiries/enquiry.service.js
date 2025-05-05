@@ -118,7 +118,7 @@ const EnquiryService = {
           statusCode: 404,
           isError: true,
           message: getMessage('en', 'error', 'viewSuccess', 'enquiries'),
-          errorStack: null
+          errorStack: null 
         };
       }
 

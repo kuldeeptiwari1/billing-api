@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "BAS001",
+      "message": "banktype created successfully.",
+      "ariaLabel": "Notification: banktype created successfully"
+    },
+    "updateSuccess": {
+      "code": "BAS002",
+      "message": "banktype updated successfully.",
+      "ariaLabel": "Notification: banktype updated successfully"
+    },
+    "listSuccess": {
+      "code": "BAS003",
+      "message": "banktype list retrieved successfully.",
+      "ariaLabel": "Notification: banktype list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "BAS004",
+      "message": "banktype details fetched successfully.",
+      "ariaLabel": "Notification: banktype details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "BAS005",
+      "message": "banktype deleted successfully.",
+      "ariaLabel": "Notification: banktype deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "BAE404",
+      "message": "banktype not found.",
+      "ariaLabel": "Error: banktype not found"
+    },
+    "createFailed": {
+      "code": "BAE403",
+      "message": "banktype not created.",
+      "ariaLabel": "Notification: banktype not created"
+    },
+    "updateFailed": {
+      "code": "BAE402",
+      "message": "banktype update failed.",
+      "ariaLabel": "Notification: banktype update failed"
+    },
+    "listFailed": {
+      "code": "BAE405",
+      "message": "banktype list retrieval failed.",
+      "ariaLabel": "Notification: banktype list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "BAE406",
+      "message": "banktype details fetch failed.",
+      "ariaLabel": "Notification: banktype details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "BAE407",
+      "message": "banktype deletion failed.",
+      "ariaLabel": "Notification: banktype deletion failed"
+    }
+  }
+}

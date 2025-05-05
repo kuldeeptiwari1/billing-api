@@ -9,6 +9,10 @@ const { InvoiceRoutes } = require('../modules/invoices/invoice.module');
 const { ReceiptRoutes } = require('../modules/receipts/receipt.module');
 const { ReportRoutes } = require('../modules/reports/report.module');
 const { EnquiryRoutes } = require('../modules/enquiries/enquiry.module');
+const { BanktypeRoutes } = require('../modules/banktypes/banktype.module');
+const { BranchRoutes } = require('../modules/branches/branch.module');
+const { DepartmentRoutes } = require('../modules/departments/department.module');
+const { ModeofpaymentRoutes } = require('../modules/modeofpayments/modeofpayment.module');
 const API_PREFIX = '/api/v1';
 const routes = [
 {
@@ -50,6 +54,22 @@ const routes = [
   {
     path: '/enquiries',
     route: EnquiryRoutes
+  },
+  {
+    path: '/banktypes',
+    route: BanktypeRoutes
+  },
+  {
+    path: '/branches',
+    route: BranchRoutes
+  },
+  {
+    path: '/departments',
+    route: DepartmentRoutes
+  },
+  {
+    path: '/modeofpayments',
+    route: ModeofpaymentRoutes
   },
 ];
 

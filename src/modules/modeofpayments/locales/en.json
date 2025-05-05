@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "MOS001",
+      "message": "modeofpayment created successfully.",
+      "ariaLabel": "Notification: modeofpayment created successfully"
+    },
+    "updateSuccess": {
+      "code": "MOS002",
+      "message": "modeofpayment updated successfully.",
+      "ariaLabel": "Notification: modeofpayment updated successfully"
+    },
+    "listSuccess": {
+      "code": "MOS003",
+      "message": "modeofpayment list retrieved successfully.",
+      "ariaLabel": "Notification: modeofpayment list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "MOS004",
+      "message": "modeofpayment details fetched successfully.",
+      "ariaLabel": "Notification: modeofpayment details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "MOS005",
+      "message": "modeofpayment deleted successfully.",
+      "ariaLabel": "Notification: modeofpayment deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "MOE404",
+      "message": "modeofpayment not found.",
+      "ariaLabel": "Error: modeofpayment not found"
+    },
+    "createFailed": {
+      "code": "MOE403",
+      "message": "modeofpayment not created.",
+      "ariaLabel": "Notification: modeofpayment not created"
+    },
+    "updateFailed": {
+      "code": "MOE402",
+      "message": "modeofpayment update failed.",
+      "ariaLabel": "Notification: modeofpayment update failed"
+    },
+    "listFailed": {
+      "code": "MOE405",
+      "message": "modeofpayment list retrieval failed.",
+      "ariaLabel": "Notification: modeofpayment list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "MOE406",
+      "message": "modeofpayment details fetch failed.",
+      "ariaLabel": "Notification: modeofpayment details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "MOE407",
+      "message": "modeofpayment deletion failed.",
+      "ariaLabel": "Notification: modeofpayment deletion failed"
+    }
+  }
+}

@@ -1,9 +1,12 @@
-const { PrismaClient : COURSEPrisma } = require('../../../prisma/courses/generated');
+const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
 const prisma = new COURSEPrisma();
+
+const { PrismaClient: DEPARTMENTPrisma } = require('../../../prisma/departments/generated');
+const departmentprisma = new DEPARTMENTPrisma();
+
 const { getMessage } = require('../../utils/constant');
 
 const CourseService = {
-  
   add: async (data) => {
     try {
       const record = await prisma.course.create({ data });
@@ -25,56 +28,56 @@ const CourseService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
       // If no params, return all records without filtering
-      if (!params) {
+      if (!params || Object.keys(params).length === 0) {
         const allRecords = await prisma.course.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
+          orderBy: { createdAt: 'desc' } // Sort by newest first
         });
-  
+
         return {
           data: allRecords,
           statusCode: 200,
           isError: false,
           message: getMessage('en', 'success', 'listSuccess', 'courses'),
-          errorStack: null,
+          errorStack: null
         };
       }
-  
+
       // Destructure params with default values
       const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
+
       // Pagination logic
-      const skip = (page - 1) * limit;
-      const take = parseInt(limit);
-  
+      const parsedLimit = parseInt(limit);
+      const parsedPage = parseInt(page);
+      const skip = (parsedPage - 1) * parsedLimit;
+
       // Default filter conditions (only fetch non-deleted courses by default)
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true // Ensure boolean conversion
       };
-  
+
       // Handle search filter
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive' // Case-insensitive search
         };
       }
-  
+
       // Fetch filtered & paginated records
-      const records = await prisma.course.findMany({
-        where: whereCondition,
-        skip,
-        take,
-        orderBy: { createdAt: sort }, // Newest first
-      });
-  
-      // Get total count for pagination
-      const totalCount = await prisma.course.count({ where: whereCondition });
-  
+      const [records, totalCount] = await Promise.all([
+        prisma.receipt.findMany({
+          where: whereCondition,
+          skip,
+          take: parsedLimit,
+          orderBy: { createdAt: sort }
+        }),
+        prisma.course.count({ where: whereCondition })
+      ]);
+
       return {
         data: records,
         statusCode: 200,
@@ -83,10 +86,10 @@ const CourseService = {
         errorStack: null,
         pagination: {
           total: totalCount,
-          page: parseInt(page),
-          limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          page: parsedPage,
+          limit: parsedLimit,
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching course failed:', error);
@@ -95,16 +98,15 @@ const CourseService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'courses'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
-      const record = await prisma.course.findUnique({ where: { id } });
-      if (!record) {
+      const course = await prisma.course.findUnique({ where: { id } });
+      if (!course) {
         return {
           data: null,
           statusCode: 404,
@@ -113,8 +115,17 @@ const CourseService = {
           errorStack: null
         };
       }
+
+      const departmentIds = course.department ? course.department.split(',').map((tag) => tag.trim()) : [];
+      const department = departmentIds.length
+        ? await departmentprisma.department.findMany({ where: { id: { in: departmentIds } } })
+        : [];
+
       return {
-        data: record,
+        data: {
+          ...course,
+          department: department
+        },
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'recordNotFound', 'courses'),
