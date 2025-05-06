@@ -13,10 +13,9 @@ model course {
   courseCode        String
   courseName        String
   department        String
-  duration          DateTime
+  duration          String
   courseFees        String
   courseDescription String
-  price             String
   isDeleted         Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

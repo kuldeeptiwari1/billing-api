@@ -144,27 +144,25 @@ const ReceiptService = {
       }
 
       const courseIds = receipt.course ? receipt.course.split(',').map((tag) => tag.trim()) : [];
-      const modeofpaymentIds = receipt.paymentMode ? receipt.paymentMode.split(',').map((tag) => tag.trim()) : [];
-      const banktypeIds = receipt.bankType ? receipt.bankType.split(',').map((tag) => tag.trim()) : [];
-      const studentIds = receipt.studentName ? receipt.studentName.split(',').map((tag) => tag.trim()) : [];
 
+      const modeofpaymentId = receipt.paymentMode;
+      const banktypeId = receipt.bankType;
+      const studentId = receipt.studentName;
 
       const [courses, paymentMode, bankType, student] = await Promise.all([
         courseIds.length ? courseprisma.course.findMany({ where: { id: { in: courseIds } } }) : [],
-        modeofpaymentIds.length
-          ? modeofpaymentprisma.modeofpayment.findMany({ where: { id: { in: modeofpaymentIds } } })
-          : [],
-        banktypeIds.length ? banktypeprisma.banktype.findMany({ where: { id: { in: banktypeIds } } }) : [],
-        studentIds.length ? studentprisma.student.findMany({ where: { id: { in: studentIds } } }) : []
+        modeofpaymentId ? modeofpaymentprisma.modeofpayment.findUnique({ where: { id: modeofpaymentId } }) : null,
+        banktypeId ? banktypeprisma.banktype.findUnique({ where: { id: banktypeId } }) : null,
+        studentId ? studentprisma.student.findUnique({ where: { id: studentId } }) : null
       ]);
 
       return {
         data: {
           ...receipt,
           course: courses,
-          paymentMode: paymentMode,
-          bankType: bankType,
-          studentName:student
+          paymentMode:paymentMode,
+          bankType:bankType,
+          studentName: student
         },
         statusCode: 200,
         isError: false,

@@ -30,7 +30,6 @@ model receipt {
   contactPersonEmail2 String
   paymentMode         String
   bankType            String
-  paytmAccount        String
   feesDueDate         DateTime
   bookIssue           String
   bookCode            String
