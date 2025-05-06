@@ -62,9 +62,6 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       bankType: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      paytmAccount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
       feesDueDate: Joi.date()
         .messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' })
         .required(),
@@ -135,9 +132,6 @@ module.exports = {
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       bankType: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      paytmAccount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
       feesDueDate: Joi.date()
         .messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' })
         .required(),
