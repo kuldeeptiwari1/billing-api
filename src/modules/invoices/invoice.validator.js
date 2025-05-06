@@ -10,68 +10,38 @@ const options = {
 module.exports = {
   add: (httpRequest) => {
     const schema = Joi.object({
-      studentName: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      status: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      issueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      course: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      taxPercentage: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      totalPrice: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      baseAmount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      totalDiscount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      subtotal: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      totalTaxes: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      finalAmount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      isDeleted: Joi.boolean().default(false).messages({
-        'boolean.base': 'must be true or false'
-      })
+      studentName: Joi.string().required(),
+      status: Joi.string().required(),
+      issueDate: Joi.string().required(),
+      course: Joi.string().required(),
+      taxPercentage: Joi.string().required(),
+      discount: Joi.string().required(),
+      totalPrice: Joi.string().required(),
+      baseAmount: Joi.string().required(),
+      totalDiscount: Joi.string().required(),
+      subtotal: Joi.string().required(),
+      totalTaxes: Joi.string().required(),
+      finalAmount: Joi.string().required(),
+      isDeleted: Joi.boolean().default(false)
     });
     return schema.validate(httpRequest.body, options);
   },
 
   update: (httpRequest) => {
     const schema = Joi.object({
-      studentName: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      status: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      issueDate: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      course: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      taxPercentage: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      discount: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      totalPrice: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      baseAmount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      totalDiscount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      subtotal: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
-      totalTaxes: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      finalAmount: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      isDeleted: Joi.boolean().default(false).messages({
-        'boolean.base': 'must be true or false'
-      })
+      studentName: Joi.string().required(),
+      status: Joi.string().required(),
+      issueDate: Joi.string().required(),
+      course: Joi.string().required(),
+      taxPercentage: Joi.string().required(),
+      discount: Joi.string().required(),
+      totalPrice: Joi.string().required(),
+      baseAmount: Joi.string().required(),
+      totalDiscount: Joi.string().required(),
+      subtotal: Joi.string().required(),
+      totalTaxes: Joi.string().required(),
+      finalAmount: Joi.string().required(),
+      isDeleted: Joi.boolean().default(false)
     });
     return schema.validate(httpRequest.body, options);
   }

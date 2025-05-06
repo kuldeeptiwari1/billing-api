@@ -13,22 +13,12 @@ const options = {
 module.exports = {
   add: (httpRequest) => {
     const schema = Joi.object({
-      courseCode: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      courseName: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      department: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      duration: Joi.string().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
-      courseFees: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      courseDescription: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
+      courseCode: Joi.string().required(),
+      courseName: Joi.string().required(),
+      department: Joi.string().required(),
+      duration: Joi.string().required(),
+      courseFees: Joi.string().required(),
+      courseDescription: Joi.string().required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)
@@ -37,25 +27,13 @@ module.exports = {
   },
   update: (httpRequest) => {
     const schema = Joi.object({
-      courseCode: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      courseName: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      department: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      duration: Joi.string().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
-      courseFees: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      courseDescription: Joi.string()
-        .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
-        .required(),
-      isDeleted: Joi.boolean()
-        .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
-        .default(false)
+      courseCode: Joi.string().required(),
+      courseName: Joi.string().required(),
+      department: Joi.string().required(),
+      duration: Joi.string().required(),
+      courseFees: Joi.string().required(),
+      courseDescription: Joi.string().required(),
+      isDeleted: Joi.boolean().default(false)
     });
     return schema.validate(httpRequest.body, options);
   }
