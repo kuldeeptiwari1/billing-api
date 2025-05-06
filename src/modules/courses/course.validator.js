@@ -22,14 +22,13 @@ module.exports = {
       department: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      duration: Joi.date().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
+      duration: Joi.string().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
       courseFees: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       courseDescription: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      price: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)
@@ -47,14 +46,13 @@ module.exports = {
       department: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      duration: Joi.date().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
+      duration: Joi.string().messages({ 'date.base': 'must be a valid date', 'any.required': 'is required' }).required(),
       courseFees: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
       courseDescription: Joi.string()
         .messages({ 'string.base': 'must be a string', 'any.required': 'is required' })
         .required(),
-      price: Joi.string().messages({ 'string.base': 'must be a string', 'any.required': 'is required' }).required(),
       isDeleted: Joi.boolean()
         .messages({ 'boolean.base': 'must be true or false', 'any.required': 'is required' })
         .default(false)
