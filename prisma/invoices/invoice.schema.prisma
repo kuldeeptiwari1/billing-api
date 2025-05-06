@@ -17,6 +17,7 @@ model invoice {
   course        String
   taxPercentage String   @default("NA")
   discount      String   @default("NA")
+  totalPrice    String
   baseAmount    String
   totalDiscount String
   subtotal      String
