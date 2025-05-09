@@ -14,7 +14,7 @@ async function main() {
       city: "city_value",
       degreee: "degreee_value",
       courseName: "courseName_value",
-      cllegeName: "cllegeName_value",
+      collegeName: "collegeName_value",
       passingYear: "passingYear_value",
       modeOfClass: "modeOfClass_value",
       department: "department_value",

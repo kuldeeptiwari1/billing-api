@@ -1,0 +1,8 @@
+model department {
+  name        String
+  slug        String   @unique
+  code        String   @unique
+  description String?
+  
+  @@map("departments")
+}

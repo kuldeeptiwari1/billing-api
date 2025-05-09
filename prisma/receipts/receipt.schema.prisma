@@ -1,0 +1,35 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+model Receipt {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  receiptNo         String   @unique
+  receiptDate       DateTime
+  studentId         String
+  contactPersonIds  String
+  totalAmount       String
+  paidReceiptAmount String
+  paidAmount        String
+  remainingAmount   String
+  fineAmount        String
+  paymentMode       String
+  paymentModeType   String
+  paymentModeName   String
+  bookIssue         String
+  bookCode          String
+  ReceiptType       String
+  paymentDetails    String
+  notes             String
+  isDeleted         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("receipts")
+}

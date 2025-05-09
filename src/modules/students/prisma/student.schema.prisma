@@ -8,7 +8,7 @@ model student {
   city            String
   degreee          String
   courseName      String
-  cllegeName      String
+  collegeName      String
   passingYear     String
   modeOfClass     String
   department      String
