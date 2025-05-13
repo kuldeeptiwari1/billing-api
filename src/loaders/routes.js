@@ -6,6 +6,7 @@ const { ReceiptRoutes } = require('../modules/receipts/receipt.module');
 const { ContactpersonRoutes } = require('../modules/contactpersons/contactperson.module');
 const { BranchRoutes } = require('../modules/branches/branch.module');
 const { DepartmentRoutes } = require('../modules/departments/department.module');
+const { CourseRoutes } = require('../modules/courses/course.module');
 const API_PREFIX = '/api/v1';
 const routes = [
 {
@@ -35,6 +36,10 @@ const routes = [
   {
     path: '/departments',
     route: DepartmentRoutes
+  },
+  {
+    path: '/courses',
+    route: CourseRoutes
   },
 ];
 

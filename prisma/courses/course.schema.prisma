@@ -1,0 +1,26 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+model Course {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  code              String   @unique
+  name              String
+  departmentIds     String[] @default([]) // Corrected spelling
+  branchIds         String[] @default([]) // Corrected spelling
+  durationInMonths  Int
+  courseFees        Float
+  courseDescription String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("courses")
+}
