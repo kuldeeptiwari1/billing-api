@@ -1,18 +1,11 @@
 // Routes
 const { AuthRoutes } = require('../modules/auth/auth.module');
-const { RoleRoutes } = require('../modules/roles/role.module');
-const { MtrRoutes } = require('../modules/modulestorole/mtr.module');
 const { StudentRoutes } = require('../modules/students/student.module');
-const { CourseRoutes } = require('../modules/courses/course.module');
-const { ExpenseRoutes } = require('../modules/expenses/expense.module');
 const { InvoiceRoutes } = require('../modules/invoices/invoice.module');
 const { ReceiptRoutes } = require('../modules/receipts/receipt.module');
-const { ReportRoutes } = require('../modules/reports/report.module');
-const { EnquiryRoutes } = require('../modules/enquiries/enquiry.module');
-const { BanktypeRoutes } = require('../modules/banktypes/banktype.module');
+const { ContactpersonRoutes } = require('../modules/contactpersons/contactperson.module');
 const { BranchRoutes } = require('../modules/branches/branch.module');
 const { DepartmentRoutes } = require('../modules/departments/department.module');
-const { ModeofpaymentRoutes } = require('../modules/modeofpayments/modeofpayment.module');
 const API_PREFIX = '/api/v1';
 const routes = [
 {
@@ -20,24 +13,8 @@ const routes = [
     route: AuthRoutes
   },
   {
-    path: '/roles',
-    route: RoleRoutes
-  },
-  {
-    path: '/mtr',
-    route: MtrRoutes
-  },
-  {
     path: '/students',
     route: StudentRoutes
-  },
-  {
-    path: '/courses',
-    route: CourseRoutes
-  },
-  {
-    path: '/expenses',
-    route: ExpenseRoutes
   },
   {
     path: '/invoices',
@@ -48,16 +25,8 @@ const routes = [
     route: ReceiptRoutes
   },
   {
-    path: '/reports',
-    route: ReportRoutes
-  },
-  {
-    path: '/enquiries',
-    route: EnquiryRoutes
-  },
-  {
-    path: '/banktypes',
-    route: BanktypeRoutes
+    path: '/contactpersons',
+    route: ContactpersonRoutes
   },
   {
     path: '/branches',
@@ -66,10 +35,6 @@ const routes = [
   {
     path: '/departments',
     route: DepartmentRoutes
-  },
-  {
-    path: '/modeofpayments',
-    route: ModeofpaymentRoutes
   },
 ];
 

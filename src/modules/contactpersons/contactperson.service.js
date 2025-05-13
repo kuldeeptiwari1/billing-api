@@ -1,26 +1,26 @@
-const { PrismaClient : INVOICEPrisma } = require('../../../prisma/invoices/generated');
-const prisma = new INVOICEPrisma();
+const { PrismaClient : CONTACTPERSONPrisma } = require('../../../prisma/contactpersons/generated');
+const prisma = new CONTACTPERSONPrisma();
 const { getMessage } = require('../../utils/constant');
 
-const InvoiceService = {
+const ContactpersonService = {
   
   add: async (data) => {
     try {
-      const record = await prisma.invoice.create({ data });
+      const record = await prisma.contactperson.create({ data });
       return {
         data: record,
         statusCode: 201,
         isError: false,
-        message: getMessage('en', 'success', 'createSuccess', 'invoices'),
+        message: getMessage('en', 'success', 'createSuccess', 'contactpersons'),
         errorStack: null
       };
     } catch (error) {
-      console.error('Invoice creation failed:', error);
+      console.error('Contactperson creation failed:', error);
       return {
         data: null,
         statusCode: 500,
         isError: true,
-        message: getMessage('en', 'error', 'createFailed', 'invoices'),
+        message: getMessage('en', 'error', 'createFailed', 'contactpersons'),
         errorStack: error
       };
     }
@@ -31,7 +31,7 @@ const InvoiceService = {
     try {
       // If no params, return all records without filtering
       if (!params) {
-        const allRecords = await prisma.invoice.findMany({
+        const allRecords = await prisma.contactperson.findMany({
           orderBy: { createdAt: 'desc' }, // Sort by newest first
         });
   
@@ -39,7 +39,7 @@ const InvoiceService = {
           data: allRecords,
           statusCode: 200,
           isError: false,
-          message: getMessage('en', 'success', 'listSuccess', 'invoices'),
+          message: getMessage('en', 'success', 'listSuccess', 'contactpersons'),
           errorStack: null,
         };
       }
@@ -51,7 +51,7 @@ const InvoiceService = {
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
   
-      // Default filter conditions (only fetch non-deleted invoices by default)
+      // Default filter conditions (only fetch non-deleted contactpersons by default)
       let whereCondition = {
         isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
       };
@@ -65,7 +65,7 @@ const InvoiceService = {
       }
   
       // Fetch filtered & paginated records
-      const records = await prisma.invoice.findMany({
+      const records = await prisma.contactperson.findMany({
         where: whereCondition,
         skip,
         take,
@@ -73,13 +73,13 @@ const InvoiceService = {
       });
   
       // Get total count for pagination
-      const totalCount = await prisma.invoice.count({ where: whereCondition });
+      const totalCount = await prisma.contactperson.count({ where: whereCondition });
   
       return {
         data: records,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'listSuccess', 'invoices'),
+        message: getMessage('en', 'success', 'listSuccess', 'contactpersons'),
         errorStack: null,
         pagination: {
           total: totalCount,
@@ -89,12 +89,12 @@ const InvoiceService = {
         },
       };
     } catch (error) {
-      console.error('Fetching invoice failed:', error);
+      console.error('Fetching contactperson failed:', error);
       return {
         data: null,
         statusCode: 500,
         isError: true,
-        message: getMessage('en', 'error', 'listFailed', 'invoices'),
+        message: getMessage('en', 'error', 'listFailed', 'contactpersons'),
         errorStack: error,
       };
     }
@@ -103,13 +103,13 @@ const InvoiceService = {
 
   view: async (id) => {
     try {
-      const record = await prisma.invoice.findUnique({ where: { id } });
+      const record = await prisma.contactperson.findUnique({ where: { id } });
       if (!record) {
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'invoices'),
+          message: getMessage('en', 'error', 'viewSuccess', 'contactpersons'),
           errorStack: null
         };
       }
@@ -117,16 +117,16 @@ const InvoiceService = {
         data: record,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'invoices'),
+        message: getMessage('en', 'success', 'recordNotFound', 'contactpersons'),
         errorStack: null
       };
     } catch (error) {
-      console.error('Fetching invoice failed:', error);
+      console.error('Fetching contactperson failed:', error);
       return {
         data: null,
         statusCode: 500,
         isError: true,
-        message: getMessage('en', 'error', 'viewFailed', 'invoices'),
+        message: getMessage('en', 'error', 'viewFailed', 'contactpersons'),
         errorStack: error
       };
     }
@@ -134,21 +134,21 @@ const InvoiceService = {
 
   update: async (id, data) => {
     try {
-      const record = await prisma.invoice.update({ where: { id }, data });
+      const record = await prisma.contactperson.update({ where: { id }, data });
       return {
         data: record,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'updateSuccess', 'invoices'),
+        message: getMessage('en', 'success', 'updateSuccess', 'contactpersons'),
         errorStack: null
       };
     } catch (error) {
-      console.error('Updating invoice failed:', error);
+      console.error('Updating contactperson failed:', error);
       return {
         data: null,
         statusCode: 500,
         isError: true,
-        message: getMessage('en', 'error', 'updateFailed', 'invoices'),
+        message: getMessage('en', 'error', 'updateFailed', 'contactpersons'),
         errorStack: error
       };
     }
@@ -156,25 +156,25 @@ const InvoiceService = {
 
   delete: async (id) => {
     try {
-      await prisma.invoice.delete({ where: { id } });
+      await prisma.contactperson.delete({ where: { id } });
       return {
         data: null,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'deleteSuccess', 'invoices'),
+        message: getMessage('en', 'success', 'deleteSuccess', 'contactpersons'),
         errorStack: null
       };
     } catch (error) {
-      console.error('Deleting invoice failed:', error);
+      console.error('Deleting contactperson failed:', error);
       return {
         data: null,
         statusCode: 500,
         isError: true,
-        message: getMessage('en', 'error', 'deleteFailed', 'invoices'),
+        message: getMessage('en', 'error', 'deleteFailed', 'contactpersons'),
         errorStack: error
       };
     }
   }
 };
 
-module.exports = InvoiceService;
+module.exports = ContactpersonService;

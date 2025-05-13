@@ -9,13 +9,17 @@ generator client {
 }
 
 model branch {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  address     String
-  closingDate DateTime
-  isDeleted   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  slug    String @unique
+  code    String @unique
+  address String
+  email   String
+  contact String
+
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("branches")
 }
