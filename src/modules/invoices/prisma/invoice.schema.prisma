@@ -1,17 +1,19 @@
 model invoice {
   invoiceNo     String   @unique
   studentName   String
-  mobileNo      String   @unique
-  contactPerson String
+  studentId     String
   issueDate     DateTime
-  dueDate       DateTime
-  status        String
-  totalAmount   String
-  paidAmount    String
-  dueAmount     String
+  taxPercentage String   @default("NA")
+  discount      String   @default("NA")
+  totalPrice    String
+  couresAmount  String
+  totalDiscount String
+  subTotal      String
+  totalTaxes    String
+  finalAmount   String
   isDeleted     Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
+ 
   @@map("invoices")
 }

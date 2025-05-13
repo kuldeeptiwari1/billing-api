@@ -1,9 +1,0 @@
-model mtr {
-  role  String @unique   
-  modules   Json      // Stores array of modules as JSON
-  isDeleted  Boolean @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@map("mtr")
-}

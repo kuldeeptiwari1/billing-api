@@ -1,0 +1,7 @@
+model ContactPerson {
+  name      String
+  phone     String
+  email     String
+  
+  @@map("contactpersons")
+}

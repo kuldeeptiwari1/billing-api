@@ -1,26 +1,28 @@
 model student {
-    name           String
-    email          String   @unique
-    phone          String   @unique
-    gender         String
-    state          String
-    city           String
-    courseName     String
-    contactPerson  String
-    modeOfClass    String
-    totalFees      String
-    paidAmount     String
-    remainingFees  String
-    dueDate        DateTime
-    preferredBatch String
-    paymentType    String
-    documentType   String
-    documentNo     String
-    profession     String
-
-    isDeleted Boolean  @default(false)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@map("students")
+  name            String
+  email           String   @unique
+  phone           String   @unique
+  gender          String
+  dateOfBirth     DateTime
+  state           String
+  city            String
+  degreee          String
+  courseName      String
+  collegeName      String
+  passingYear     String
+  modeOfClass     String
+  department      String
+  totalFees       String
+  paidAmount      String
+  remainingFees   String
+  feesDueDate     DateTime
+  preferredBranch String
+  paymentMode     String
+  documentType    String
+  documentNo      String
+  profession      String
+  preferredBatch  String
+  counsellorName  String
+ 
+  @@map("students")
 }

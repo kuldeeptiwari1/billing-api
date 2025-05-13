@@ -1,20 +1,24 @@
-model receipt {
-  receiptNo      String   @unique
-  receiptDate    DateTime
-  studentName    String
-  mobileNo       String   @unique
-  course         String
-  totalAmount    String
-  paidAmount     String
-  dueAmount      String
-  paymentMode    String
-  paymentDetails String
-  dueDate        DateTime
-  contactPerson  String
-  notes          String
-  isDeleted      Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+model Receipt {
+  receiptNo           String           @unique
+  receiptDate         DateTime
+  studentId           String
+  contactPersonIds    String
+  totalAmount         String
+  paidReceiptAmount   String
+  paidAmount          String
+  remainingAmount     String
+  fineAmount          String
+  paymentMode         String
+  paymentModeType     String
+  paymentModeName     String
+  bookIssue           String
+  bookCode            String
+  ReceiptType         String
+  paymentDetails      String
+  notes               String
+  isDeleted           Boolean          @default(false)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 
   @@map("receipts")
 }

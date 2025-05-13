@@ -12,15 +12,14 @@ model invoice {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   invoiceNo     String   @unique
   studentName   String
-  status        String
+  studentId     String
   issueDate     DateTime
-  course        String
   taxPercentage String   @default("NA")
   discount      String   @default("NA")
   totalPrice    String
-  baseAmount    String
+  couresAmount  String
   totalDiscount String
-  subtotal      String
+  subTotal      String
   totalTaxes    String
   finalAmount   String
   isDeleted     Boolean  @default(false)
