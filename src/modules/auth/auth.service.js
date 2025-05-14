@@ -1,4 +1,4 @@
-const { PrismaClient: AUTHPrisma } = require('../../../prisma/auth/generated');
+const { PrismaClient: AUTHPrisma } = require('../../../prisma/users/generated');
 const prisma = new AUTHPrisma();
 const bcrypt = require('bcryptjs');
 const JwtService = require('../../utils/jwt');
@@ -46,7 +46,7 @@ const AuthService = {
       const payload = {
         id: user.id,
         email: user.email,
-        role: user.role
+        roles: user.roles
       };
 
       const accessToken = await JwtService.generateJWT({ payload });
@@ -83,7 +83,7 @@ const AuthService = {
 
   doRegistration: async (requestBody) => {
     try {
-      const { email, mobile, password, role = 'user' } = requestBody; // Default role is "user"
+      const { email, mobile, password, roles = ['user'] } = requestBody; // Default roles is "user"
       const hashedPassword = bcrypt.hashSync(password, 8);
 
       // Check if the email already exists
@@ -107,7 +107,7 @@ const AuthService = {
         data: {
           email: email.toLowerCase(),
           mobile: mobile,
-          role: role.toLowerCase(),
+          roles: roles,
           password: hashedPassword
         }
       });
@@ -213,7 +213,7 @@ const AuthService = {
       // Find user in DB
       const user = await prisma.user.findUnique({
         where: { id: decoded.id },
-        select: { id: true, email: true, role: true }
+        select: { id: true, email: true, roles: true }
       });
 
       if (!user) {
@@ -228,11 +228,11 @@ const AuthService = {
 
       // Generate new access token
       const newAccessToken = await JwtService.generateJWT({
-        payload: { id: user.id, email: user.email, role: user.role }
+        payload: { id: user.id, email: user.email, roles: user.roles }
       });
       // Generate new access token
       const newRefreshToken = await JwtService.generateRefreshToken({
-        payload: { id: user.id, email: user.email, role: user.role }
+        payload: { id: user.id, email: user.email, roles: user.roles }
       });
 
       return {
@@ -282,13 +282,13 @@ const AuthService = {
       // Fetch user from the database
       const user = await prisma.user.findUnique({
         where: { id: decoded.id }, // Use the user ID from the token
-        select: { id: true, email: true, role: true }
+        select: { id: true, email: true, roles: true }
       });
 
-      // Fetch allowed modules and operations for the role
+      // Fetch allowed modules and operations for the roles
       const allowedModulesToRole = []
       // await prismamtr.mtr.findUnique({
-      //   where: { role: user.role.toLowerCase() },
+      //   where: { roles: user.roles.toLowerCase() },
       //   select: { modules: true }
       // });
 
@@ -325,7 +325,7 @@ const AuthService = {
     try {
       const user = await prisma.user.findUnique({
         where: { email: httpRequest.user.email },
-        select: { id: true, email: true, role: true }
+        select: { id: true, email: true, roles: true }
       });
 
       if (!user) {
@@ -341,7 +341,7 @@ const AuthService = {
       return {
         data: {
           email: user.email,
-          role: user.role
+          roles: user.roles
         },
         statusCode: 200,
         isError: false,
