@@ -1,0 +1,7 @@
+model bank {
+    name   String
+    slug   String @unique
+    branch String
+
+    @@map("banks")
+}

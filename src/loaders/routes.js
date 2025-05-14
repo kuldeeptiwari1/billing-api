@@ -8,6 +8,7 @@ const { BranchRoutes } = require('../modules/branches/branch.module');
 const { DepartmentRoutes } = require('../modules/departments/department.module');
 const { CourseRoutes } = require('../modules/courses/course.module');
 const { UserRoutes } = require('../modules/users/user.module');
+const { BankRoutes } = require('../modules/banks/bank.module');
 const API_PREFIX = '/api/v1';
 const routes = [
 {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/users',
     route: UserRoutes
+  },
+  {
+    path: '/banks',
+    route: BankRoutes
   },
 ];
 

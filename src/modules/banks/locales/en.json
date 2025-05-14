@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "BAS001",
+      "message": "bank created successfully.",
+      "ariaLabel": "Notification: bank created successfully"
+    },
+    "updateSuccess": {
+      "code": "BAS002",
+      "message": "bank updated successfully.",
+      "ariaLabel": "Notification: bank updated successfully"
+    },
+    "listSuccess": {
+      "code": "BAS003",
+      "message": "bank list retrieved successfully.",
+      "ariaLabel": "Notification: bank list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "BAS004",
+      "message": "bank details fetched successfully.",
+      "ariaLabel": "Notification: bank details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "BAS005",
+      "message": "bank deleted successfully.",
+      "ariaLabel": "Notification: bank deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "BAE404",
+      "message": "bank not found.",
+      "ariaLabel": "Error: bank not found"
+    },
+    "createFailed": {
+      "code": "BAE403",
+      "message": "bank not created.",
+      "ariaLabel": "Notification: bank not created"
+    },
+    "updateFailed": {
+      "code": "BAE402",
+      "message": "bank update failed.",
+      "ariaLabel": "Notification: bank update failed"
+    },
+    "listFailed": {
+      "code": "BAE405",
+      "message": "bank list retrieval failed.",
+      "ariaLabel": "Notification: bank list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "BAE406",
+      "message": "bank details fetch failed.",
+      "ariaLabel": "Notification: bank details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "BAE407",
+      "message": "bank deletion failed.",
+      "ariaLabel": "Notification: bank deletion failed"
+    }
+  }
+}
