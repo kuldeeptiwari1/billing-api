@@ -1,0 +1,61 @@
+{
+  "success": {
+    "createSuccess": {
+      "code": "USS001",
+      "message": "user created successfully.",
+      "ariaLabel": "Notification: user created successfully"
+    },
+    "updateSuccess": {
+      "code": "USS002",
+      "message": "user updated successfully.",
+      "ariaLabel": "Notification: user updated successfully"
+    },
+    "listSuccess": {
+      "code": "USS003",
+      "message": "user list retrieved successfully.",
+      "ariaLabel": "Notification: user list retrieved successfully"
+    },
+    "viewSuccess": {
+      "code": "USS004",
+      "message": "user details fetched successfully.",
+      "ariaLabel": "Notification: user details fetched successfully"
+    },
+    "deleteSuccess": {
+      "code": "USS005",
+      "message": "user deleted successfully.",
+      "ariaLabel": "Notification: user deleted successfully"
+    }
+  },
+  "error": {
+    "recordNotFound": {
+      "code": "USE404",
+      "message": "user not found.",
+      "ariaLabel": "Error: user not found"
+    },
+    "createFailed": {
+      "code": "USE403",
+      "message": "user not created.",
+      "ariaLabel": "Notification: user not created"
+    },
+    "updateFailed": {
+      "code": "USE402",
+      "message": "user update failed.",
+      "ariaLabel": "Notification: user update failed"
+    },
+    "listFailed": {
+      "code": "USE405",
+      "message": "user list retrieval failed.",
+      "ariaLabel": "Notification: user list retrieval failed"
+    },
+    "viewFailed": {
+      "code": "USE406",
+      "message": "user details fetch failed.",
+      "ariaLabel": "Notification: user details fetch failed"
+    },
+    "deleteFailed": {
+      "code": "USE407",
+      "message": "user deletion failed.",
+      "ariaLabel": "Notification: user deletion failed"
+    }
+  }
+}
