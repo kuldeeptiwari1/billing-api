@@ -14,9 +14,7 @@ const AuthService = {
     try {
       // Find user by email or mobile
       user = await prisma.user.findFirst({
-        where: {
-          OR: [{ email: identifier.toLowerCase() }, { mobile: identifier }]
-        }
+        where: { email: identifier.toLowerCase() }
       });
 
       // If user is not found
@@ -83,13 +81,13 @@ const AuthService = {
 
   doRegistration: async (requestBody) => {
     try {
-      const { email, mobile, password, roles = ['user'] } = requestBody; // Default roles is "user"
+      const { email, password, roles = 'user' } = requestBody; // Default roles is "user"
       const hashedPassword = bcrypt.hashSync(password, 8);
 
       // Check if the email already exists
       const existingUser = await prisma.user.findFirst({
         where: {
-          OR: [{ email: email.toLowerCase() }, { mobile: mobile }]
+          email: email.toLowerCase()
         }
       });
 
@@ -106,7 +104,6 @@ const AuthService = {
       const user = await prisma.user.create({
         data: {
           email: email.toLowerCase(),
-          mobile: mobile,
           roles: roles,
           password: hashedPassword
         }
