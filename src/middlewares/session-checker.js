@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { PrismaClient: AUTHPrisma } = require("../../prisma/auth/generated");
 const prisma = new AUTHPrisma();
-const { PrismaClient: MTRPrisma } = require("../../prisma/modulestorole/generated");
-const prismamtr = new MTRPrisma();
+// const { PrismaClient: MTRPrisma } = require("../../prisma/modulestorole/generated");
+// const prismamtr = new MTRPrisma();
 const { getMessage } = require("../utils/constant");
 const accessConfig = require("../config/access.json");
 
@@ -156,30 +156,30 @@ const sessionChecker = async (req, res, next) => {
 };
 
 // **Helper Function to Check Permissions**
-const checkPermission = (modules, moduleName, operation, res, next) => {
-  const moduleAccess = modules.find((mod) => mod.value === moduleName);
+// const checkPermission = (modules, moduleName, operation, res, next) => {
+//   const moduleAccess = modules.find((mod) => mod.value === moduleName);
 
-  if (!moduleAccess) {
-    return res.status(403).json({
-      data: null,
-      statusCode: 403,
-      isError: true,
-      message: `Forbidden: You do not have access to ${moduleName}`,
-      errorStack: null,
-    });
-  }
+//   if (!moduleAccess) {
+//     return res.status(403).json({
+//       data: null,
+//       statusCode: 403,
+//       isError: true,
+//       message: `Forbidden: You do not have access to ${moduleName}`,
+//       errorStack: null,
+//     });
+//   }
 
-  if (!moduleAccess.operations.includes(operation)) {
-    return res.status(403).json({
-      data: null,
-      statusCode: 403,
-      isError: true,
-      message: `Forbidden: You do not have permission to ${operation} on ${moduleName}`,
-      errorStack: null,
-    });
-  }
+//   if (!moduleAccess.operations.includes(operation)) {
+//     return res.status(403).json({
+//       data: null,
+//       statusCode: 403,
+//       isError: true,
+//       message: `Forbidden: You do not have permission to ${operation} on ${moduleName}`,
+//       errorStack: null,
+//     });
+//   }
 
-  next();
-};
+//   next();
+// };
 
 module.exports = sessionChecker;

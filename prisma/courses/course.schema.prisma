@@ -12,8 +12,8 @@ model Course {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   code              String   @unique
   name              String
-  departmentIds     String[] @default([]) // Corrected spelling
-  branchIds         String[] @default([]) // Corrected spelling
+  departmentIds     String @default("") // Corrected spelling
+  branchIds         String @default("") // Corrected spelling
   durationInMonths  Int
   courseFees        Float
   courseDescription String

@@ -3,8 +3,8 @@ const prisma = new AUTHPrisma();
 const bcrypt = require('bcryptjs');
 const JwtService = require('../../utils/jwt');
 const { getMessage } = require('../../utils/constant');
-const { PrismaClient: MTRPrisma } = require('../../../prisma/modulestorole/generated');
-const prismamtr = new MTRPrisma();
+// const { PrismaClient: MTRPrisma } = require('../../../prisma/modulestorole/generated');
+// const prismamtr = new MTRPrisma();
 
 const AuthService = {
   doLogin: async (requestBody) => {
@@ -286,10 +286,11 @@ const AuthService = {
       });
 
       // Fetch allowed modules and operations for the role
-      const allowedModulesToRole = await prismamtr.mtr.findUnique({
-        where: { role: user.role.toLowerCase() },
-        select: { modules: true }
-      });
+      const allowedModulesToRole = []
+      // await prismamtr.mtr.findUnique({
+      //   where: { role: user.role.toLowerCase() },
+      //   select: { modules: true }
+      // });
 
       if (!user) {
         return {
