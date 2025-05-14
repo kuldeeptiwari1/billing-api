@@ -14,6 +14,7 @@ describe('branch API', () => {
       address: "address_value",
       email: "test@example.com",
       contact: "contact_value",
+      closingDate: "2025-05-14T19:43:38.935Z",
       isDeleted: false
       });
 

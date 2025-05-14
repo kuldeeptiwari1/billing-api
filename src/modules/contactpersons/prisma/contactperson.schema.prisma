@@ -2,6 +2,7 @@ model ContactPerson {
   name      String
   phone     String
   email     String
-  
+  branchIds String
+
   @@map("contactpersons")
 }

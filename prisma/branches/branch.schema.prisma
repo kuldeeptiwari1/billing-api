@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb://localhost:27017/billing"
 }
 
 generator client {
@@ -9,13 +9,14 @@ generator client {
 }
 
 model branch {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  slug    String @unique
-  code    String @unique
-  address String
-  email   String
-  contact String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String   @unique
+  code        String   @unique
+  address     String
+  email       String
+  contact     String
+  closingDate DateTime
 
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())

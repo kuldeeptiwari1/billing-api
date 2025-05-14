@@ -12,6 +12,7 @@ describe('department API', () => {
       slug: "slug_value",
       code: "code_value",
       description: null,
+      closingDate: "2025-05-14T19:44:29.843Z",
       isDeleted: false
       });
 

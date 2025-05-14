@@ -13,6 +13,7 @@ model ContactPerson {
   name  String
   phone String
   email String
+  branchIds String
 
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())

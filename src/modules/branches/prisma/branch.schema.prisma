@@ -1,10 +1,11 @@
 model branch {
-  name     String
-  slug     String   @unique
-  code     String   @unique
-  address  String
-  email    String
-  contact  String
-  
-  @@map("branches")
+    name        String
+    slug        String   @unique
+    code        String   @unique
+    address     String
+    email       String
+    contact     String
+    closingDate DateTime
+
+    @@map("branches")
 }
