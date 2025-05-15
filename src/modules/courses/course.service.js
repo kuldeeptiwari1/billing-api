@@ -29,14 +29,53 @@ const CourseService = {
 
   list: async (params) => {
     try {
-      const {
-        page = 1,
-        limit = 10,
-        search = '',
-        searchField = 'title',
-        isDeleted = false,
-        sort = 'desc'
-      } = params || {};
+      // ✅ If no params, return all records (with branch & department enrichment)
+      if (!params) {
+        const allRecords = await prisma.course.findMany({
+          orderBy: { createdAt: 'desc' }
+        });
+
+        const enrichedRecords = await Promise.all(
+          allRecords.map(async (course) => {
+            const branchIdsArray =
+              course.branchIds
+                ?.split(',')
+                .map((id) => id.trim())
+                .filter(Boolean) || [];
+            const departmentIdsArray =
+              course.departmentIds
+                ?.split(',')
+                .map((id) => id.trim())
+                .filter(Boolean) || [];
+
+            const branches = await branchprisma.branch.findMany({
+              where: { id: { in: branchIdsArray } }
+            });
+
+            const departments = await departmentprisma.department.findMany({
+              where: { id: { in: departmentIdsArray } }
+            });
+
+            return {
+              ...course,
+              branchIds: branches,
+              departmentIds: departments
+            };
+          })
+        );
+
+        return {
+          data: enrichedRecords,
+          statusCode: 200,
+          isError: false,
+          message: getMessage('en', 'success', 'listSuccess', 'courses'),
+          errorStack: null
+        };
+      }
+
+      // ✅ Else, proceed with paginated/filter logic
+      const { page = 1, limit = 10, search = '', searchField = 'name', isDeleted = false, sort = 'desc' } = params;
+
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
 
@@ -60,17 +99,29 @@ const CourseService = {
 
       const enrichedRecords = await Promise.all(
         records.map(async (course) => {
-          const branchIdsArray = course.branchIds.split(',').map((id) => id.trim());
+          const branchIdsArray =
+            course.branchIds
+              ?.split(',')
+              .map((id) => id.trim())
+              .filter(Boolean) || [];
+          const departmentIdsArray =
+            course.departmentIds
+              ?.split(',')
+              .map((id) => id.trim())
+              .filter(Boolean) || [];
 
           const branches = await branchprisma.branch.findMany({
-            where: {
-              id: { in: branchIdsArray }
-            }
+            where: { id: { in: branchIdsArray } }
+          });
+
+          const departments = await departmentprisma.department.findMany({
+            where: { id: { in: departmentIdsArray } }
           });
 
           return {
             ...course,
-            branchIds: branches
+            branchIds: branches,
+            departmentIds: departments
           };
         })
       );
@@ -116,17 +167,29 @@ const CourseService = {
         };
       }
 
-      const branchIdsArray = record.branchIds.split(',').map((id) => id.trim());
+      const branchIdsArray =
+        record.branchIds
+          ?.split(',')
+          .map((id) => id.trim())
+          .filter(Boolean) || [];
+      const departmentIdsArray =
+        record.departmentIds
+          ?.split(',')
+          .map((id) => id.trim())
+          .filter(Boolean) || [];
 
       const branches = await branchprisma.branch.findMany({
-        where: {
-          id: { in: branchIdsArray }
-        }
+        where: { id: { in: branchIdsArray } }
+      });
+
+      const departments = await departmentprisma.department.findMany({
+        where: { id: { in: departmentIdsArray } }
       });
 
       const enrichedRecord = {
         ...record,
-        branchIds: branches
+        branchIds: branches,
+        departmentIds: departments
       };
 
       return {
