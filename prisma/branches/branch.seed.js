@@ -11,7 +11,7 @@ async function main() {
         address: 'address_value',
         email: 'test@example.com',
         contact: 'contact_value',
-        closingDate: 5,
+        closingDay: 5,
         isDeleted: false
       }
     ],

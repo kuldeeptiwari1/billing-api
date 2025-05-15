@@ -9,7 +9,7 @@ async function main() {
         slug: 'slug_value',
         code: 'code_value',
         description: null,
-        closingDate: 5,
+        closingDay: 5,
         isDeleted: false
       }
     ],
