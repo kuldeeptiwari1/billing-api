@@ -1,9 +1,8 @@
-const { PrismaClient : INVOICEPrisma } = require('../../../prisma/invoices/generated');
+const { PrismaClient: INVOICEPrisma } = require('../../../prisma/invoices/generated');
 const prisma = new INVOICEPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const InvoiceService = {
-  
   add: async (data) => {
     try {
       const record = await prisma.invoice.create({ data });
@@ -25,58 +24,53 @@ const InvoiceService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
-      // If no params, return all records without filtering
-      if (!params) {
-        const allRecords = await prisma.invoice.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
-        });
-  
-        return {
-          data: allRecords,
-          statusCode: 200,
-          isError: false,
-          message: getMessage('en', 'success', 'listSuccess', 'invoices'),
-          errorStack: null,
-        };
-      }
-  
-      // Destructure params with default values
-      const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
-      // Pagination logic
+      const {
+        page = 1,
+        limit = 10,
+        search = '',
+        searchField = 'invoiceNo',
+        isDeleted = false,
+        sort = 'desc'
+      } = params || {};
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
-  
-      // Default filter conditions (only fetch non-deleted invoices by default)
-      let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+
+      const whereCondition = {
+        isDeleted: isDeleted === 'true' || isDeleted === true
       };
-  
-      // Handle search filter
+
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive'
         };
       }
-  
-      // Fetch filtered & paginated records
+
       const records = await prisma.invoice.findMany({
         where: whereCondition,
         skip,
         take,
-        orderBy: { createdAt: sort }, // Newest first
+        orderBy: { createdAt: sort }
       });
-  
-      // Get total count for pagination
+
+      const enrichedRecords = await Promise.all(
+        records.map(async (invoice) => {
+          const student = await prisma.student.findUnique({ where: { id: invoice.studentId } });
+
+          return {
+            ...invoice,
+            student
+          };
+        })
+      );
+
       const totalCount = await prisma.invoice.count({ where: whereCondition });
-  
+
       return {
-        data: records,
+        data: enrichedRecords,
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'listSuccess', 'invoices'),
@@ -85,8 +79,8 @@ const InvoiceService = {
           total: totalCount,
           page: parseInt(page),
           limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching invoice failed:', error);
@@ -95,29 +89,35 @@ const InvoiceService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'invoices'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
       const record = await prisma.invoice.findUnique({ where: { id } });
+
       if (!record) {
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'invoices'),
+          message: getMessage('en', 'error', 'recordNotFound', 'invoices'),
           errorStack: null
         };
       }
+
+      const student = await prisma.student.findUnique({ where: { id: record.studentId } });
+
       return {
-        data: record,
+        data: {
+          ...record,
+          student
+        },
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'invoices'),
+        message: getMessage('en', 'success', 'viewSuccess', 'invoices'),
         errorStack: null
       };
     } catch (error) {

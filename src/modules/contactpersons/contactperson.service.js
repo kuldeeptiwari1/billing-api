@@ -1,9 +1,8 @@
-const { PrismaClient : CONTACTPERSONPrisma } = require('../../../prisma/contactpersons/generated');
+const { PrismaClient: CONTACTPERSONPrisma } = require('../../../prisma/contactpersons/generated');
 const prisma = new CONTACTPERSONPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const ContactpersonService = {
-  
   add: async (data) => {
     try {
       const record = await prisma.contactperson.create({ data });
@@ -25,58 +24,87 @@ const ContactpersonService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
-      // If no params, return all records without filtering
+      // If no params, return all records
       if (!params) {
         const allRecords = await prisma.contactperson.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
+          orderBy: { createdAt: 'desc' }
         });
-  
+
+        const enrichedRecords = await Promise.all(
+          allRecords.map(async (contact) => {
+            const branchIdsArray = contact.branchIds.split(',').map((id) => id.trim());
+
+            const branches = await prisma.branch.findMany({
+              where: {
+                id: { in: branchIdsArray }
+              }
+            });
+
+            return {
+              ...contact,
+              branchIds: branches
+            };
+          })
+        );
+
         return {
-          data: allRecords,
+          data: enrichedRecords,
           statusCode: 200,
           isError: false,
           message: getMessage('en', 'success', 'listSuccess', 'contactpersons'),
-          errorStack: null,
+          errorStack: null
         };
       }
-  
-      // Destructure params with default values
-      const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
-      // Pagination logic
+
+      // Destructure params
+      const { page = 1, limit = 10, search = '', searchField = 'name', isDeleted = false, sort = 'desc' } = params;
+
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
-  
-      // Default filter conditions (only fetch non-deleted contactpersons by default)
+
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true
       };
-  
-      // Handle search filter
+
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive'
         };
       }
-  
-      // Fetch filtered & paginated records
+
       const records = await prisma.contactperson.findMany({
         where: whereCondition,
         skip,
         take,
-        orderBy: { createdAt: sort }, // Newest first
+        orderBy: { createdAt: sort }
       });
-  
-      // Get total count for pagination
+
+      // Enrich with branch details
+      const enrichedRecords = await Promise.all(
+        records.map(async (contact) => {
+          const branchIdsArray = contact.branchIds.split(',').map((id) => id.trim());
+
+          const branches = await prisma.branch.findMany({
+            where: {
+              id: { in: branchIdsArray }
+            }
+          });
+
+          return {
+            ...contact,
+            branchIds: branches
+          };
+        })
+      );
+
       const totalCount = await prisma.contactperson.count({ where: whereCondition });
-  
+
       return {
-        data: records,
+        data: enrichedRecords,
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'listSuccess', 'contactpersons'),
@@ -85,8 +113,8 @@ const ContactpersonService = {
           total: totalCount,
           page: parseInt(page),
           limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching contactperson failed:', error);
@@ -95,29 +123,44 @@ const ContactpersonService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'contactpersons'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
       const record = await prisma.contactperson.findUnique({ where: { id } });
+
       if (!record) {
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'contactpersons'),
+          message: getMessage('en', 'error', 'recordNotFound', 'contactpersons'),
           errorStack: null
         };
       }
+
+      // Enrich with branch data
+      const branchIdsArray = record.branchIds.split(',').map((id) => id.trim());
+
+      const branches = await prisma.branch.findMany({
+        where: {
+          id: { in: branchIdsArray }
+        }
+      });
+
+      const enrichedRecord = {
+        ...record,
+        branchIds: branches // Now this is an array of branch objects
+      };
+
       return {
-        data: record,
+        data: enrichedRecord,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'contactpersons'),
+        message: getMessage('en', 'success', 'viewSuccess', 'contactpersons'),
         errorStack: null
       };
     } catch (error) {

@@ -1,9 +1,8 @@
-const { PrismaClient : COURSEPrisma } = require('../../../prisma/courses/generated');
+const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
 const prisma = new COURSEPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const CourseService = {
-  
   add: async (data) => {
     try {
       const record = await prisma.course.create({ data });
@@ -25,58 +24,59 @@ const CourseService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
-      // If no params, return all records without filtering
-      if (!params) {
-        const allRecords = await prisma.course.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
-        });
-  
-        return {
-          data: allRecords,
-          statusCode: 200,
-          isError: false,
-          message: getMessage('en', 'success', 'listSuccess', 'courses'),
-          errorStack: null,
-        };
-      }
-  
-      // Destructure params with default values
-      const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
-      // Pagination logic
+      const {
+        page = 1,
+        limit = 10,
+        search = '',
+        searchField = 'title',
+        isDeleted = false,
+        sort = 'desc'
+      } = params || {};
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
-  
-      // Default filter conditions (only fetch non-deleted courses by default)
-      let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+
+      const whereCondition = {
+        isDeleted: isDeleted === 'true' || isDeleted === true
       };
-  
-      // Handle search filter
+
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive'
         };
       }
-  
-      // Fetch filtered & paginated records
+
       const records = await prisma.course.findMany({
         where: whereCondition,
         skip,
         take,
-        orderBy: { createdAt: sort }, // Newest first
+        orderBy: { createdAt: sort }
       });
-  
-      // Get total count for pagination
+
+      const enrichedRecords = await Promise.all(
+        records.map(async (course) => {
+          const branchIdsArray = course.branchIds.split(',').map((id) => id.trim());
+
+          const branches = await prisma.branch.findMany({
+            where: {
+              id: { in: branchIdsArray }
+            }
+          });
+
+          return {
+            ...course,
+            branchIds: branches
+          };
+        })
+      );
+
       const totalCount = await prisma.course.count({ where: whereCondition });
-  
+
       return {
-        data: records,
+        data: enrichedRecords,
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'listSuccess', 'courses'),
@@ -85,8 +85,8 @@ const CourseService = {
           total: totalCount,
           page: parseInt(page),
           limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching course failed:', error);
@@ -95,29 +95,43 @@ const CourseService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'courses'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
       const record = await prisma.course.findUnique({ where: { id } });
+
       if (!record) {
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'courses'),
+          message: getMessage('en', 'error', 'recordNotFound', 'courses'),
           errorStack: null
         };
       }
+
+      const branchIdsArray = record.branchIds.split(',').map((id) => id.trim());
+
+      const branches = await prisma.branch.findMany({
+        where: {
+          id: { in: branchIdsArray }
+        }
+      });
+
+      const enrichedRecord = {
+        ...record,
+        branchIds: branches
+      };
+
       return {
-        data: record,
+        data: enrichedRecord,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'courses'),
+        message: getMessage('en', 'success', 'viewSuccess', 'courses'),
         errorStack: null
       };
     } catch (error) {

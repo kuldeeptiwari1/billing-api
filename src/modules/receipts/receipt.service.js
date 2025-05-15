@@ -1,9 +1,8 @@
-const { PrismaClient : RECEIPTPrisma } = require('../../../prisma/receipts/generated');
+const { PrismaClient: RECEIPTPrisma } = require('../../../prisma/receipts/generated');
 const prisma = new RECEIPTPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const ReceiptService = {
-  
   add: async (data) => {
     try {
       const record = await prisma.receipt.create({ data });
@@ -25,58 +24,61 @@ const ReceiptService = {
       };
     }
   },
-  
-  
+
   list: async (params) => {
     try {
-      // If no params, return all records without filtering
-      if (!params) {
-        const allRecords = await prisma.receipt.findMany({
-          orderBy: { createdAt: 'desc' }, // Sort by newest first
-        });
-  
-        return {
-          data: allRecords,
-          statusCode: 200,
-          isError: false,
-          message: getMessage('en', 'success', 'listSuccess', 'receipts'),
-          errorStack: null,
-        };
-      }
-  
-      // Destructure params with default values
-      const { page = 1, limit = 10, search = '', searchField = 'title', isDeleted = false, sort = 'desc' } = params;
-  
-      // Pagination logic
+      const {
+        page = 1,
+        limit = 10,
+        search = '',
+        searchField = 'receiptNo',
+        isDeleted = false,
+        sort = 'desc'
+      } = params || {};
       const skip = (page - 1) * limit;
       const take = parseInt(limit);
-  
-      // Default filter conditions (only fetch non-deleted receipts by default)
+
       let whereCondition = {
-        isDeleted: isDeleted === 'true' || isDeleted === true, // Ensure boolean conversion
+        isDeleted: isDeleted === 'true' || isDeleted === true
       };
-  
-      // Handle search filter
+
       if (search && searchField) {
         whereCondition[searchField] = {
           contains: search,
-          mode: 'insensitive', // Case-insensitive search
+          mode: 'insensitive'
         };
       }
-  
-      // Fetch filtered & paginated records
+
       const records = await prisma.receipt.findMany({
         where: whereCondition,
         skip,
         take,
-        orderBy: { createdAt: sort }, // Newest first
+        orderBy: { createdAt: sort }
       });
-  
-      // Get total count for pagination
+
+      const enrichedRecords = await Promise.all(
+        records.map(async (receipt) => {
+          // Fetch student object
+          const student = await prisma.student.findUnique({ where: { id: receipt.studentId } });
+
+          // Fetch contact persons
+          const contactIds = receipt.contactPersonIds.split(',').map((id) => id.trim());
+          const contactPersons = await prisma.contactperson.findMany({
+            where: { id: { in: contactIds } }
+          });
+
+          return {
+            ...receipt,
+            student,
+            contactPersonIds: contactPersons
+          };
+        })
+      );
+
       const totalCount = await prisma.receipt.count({ where: whereCondition });
-  
+
       return {
-        data: records,
+        data: enrichedRecords,
         statusCode: 200,
         isError: false,
         message: getMessage('en', 'success', 'listSuccess', 'receipts'),
@@ -85,8 +87,8 @@ const ReceiptService = {
           total: totalCount,
           page: parseInt(page),
           limit: take,
-          totalPages: Math.ceil(totalCount / take),
-        },
+          totalPages: Math.ceil(totalCount / take)
+        }
       };
     } catch (error) {
       console.error('Fetching receipt failed:', error);
@@ -95,29 +97,44 @@ const ReceiptService = {
         statusCode: 500,
         isError: true,
         message: getMessage('en', 'error', 'listFailed', 'receipts'),
-        errorStack: error,
+        errorStack: error
       };
     }
   },
 
-
   view: async (id) => {
     try {
-      const record = await prisma.receipt.findUnique({ where: { id } });
-      if (!record) {
+      const receipt = await prisma.receipt.findUnique({ where: { id } });
+
+      if (!receipt) {
         return {
           data: null,
           statusCode: 404,
           isError: true,
-          message: getMessage('en', 'error', 'viewSuccess', 'receipts'),
+          message: getMessage('en', 'error', 'recordNotFound', 'receipts'),
           errorStack: null
         };
       }
+
+      const student = await prisma.student.findUnique({ where: { id: receipt.studentId } });
+
+      const contactIds = receipt.contactPersonIds.split(',').map((id) => id.trim());
+
+      const contactPersons = await prisma.contactperson.findMany({
+        where: { id: { in: contactIds } }
+      });
+
+      const enrichedReceipt = {
+        ...receipt,
+        student,
+        contactPersonIds: contactPersons
+      };
+
       return {
-        data: record,
+        data: enrichedReceipt,
         statusCode: 200,
         isError: false,
-        message: getMessage('en', 'success', 'recordNotFound', 'receipts'),
+        message: getMessage('en', 'success', 'viewSuccess', 'receipts'),
         errorStack: null
       };
     } catch (error) {
