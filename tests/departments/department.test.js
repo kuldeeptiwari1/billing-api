@@ -5,16 +5,14 @@ describe('department API', () => {
   let createdId;
 
   it('should create a department', async () => {
-    const res = await request(app)
-      .post('/api/v1/departments')
-      .send({
-      name: "name_value",
-      slug: "slug_value",
-      code: "code_value",
+    const res = await request(app).post('/api/v1/departments').send({
+      name: 'name_value',
+      slug: 'slug_value',
+      code: 'code_value',
       description: null,
-      closingDate: "2025-05-14T19:44:29.843Z",
+      closingDate: 5,
       isDeleted: false
-      });
+    });
 
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
@@ -34,9 +32,7 @@ describe('department API', () => {
   });
 
   it('should update department', async () => {
-    const res = await request(app)
-      .put(`/api/v1/departments/${createdId}`)
-      .send({});
+    const res = await request(app).put(`/api/v1/departments/${createdId}`).send({});
 
     expect([200, 204]).toContain(res.statusCode);
   });

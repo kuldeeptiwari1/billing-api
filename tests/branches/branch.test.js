@@ -5,18 +5,16 @@ describe('branch API', () => {
   let createdId;
 
   it('should create a branch', async () => {
-    const res = await request(app)
-      .post('/api/v1/branches')
-      .send({
-      name: "name_value",
-      slug: "slug_value",
-      code: "code_value",
-      address: "address_value",
-      email: "test@example.com",
-      contact: "contact_value",
-      closingDate: "2025-05-14T19:43:38.935Z",
+    const res = await request(app).post('/api/v1/branches').send({
+      name: 'name_value',
+      slug: 'slug_value',
+      code: 'code_value',
+      address: 'address_value',
+      email: 'test@example.com',
+      contact: 'contact_value',
+      closingDate: 5,
       isDeleted: false
-      });
+    });
 
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
@@ -36,9 +34,7 @@ describe('branch API', () => {
   });
 
   it('should update branch', async () => {
-    const res = await request(app)
-      .put(`/api/v1/branches/${createdId}`)
-      .send({});
+    const res = await request(app).put(`/api/v1/branches/${createdId}`).send({});
 
     expect([200, 204]).toContain(res.statusCode);
   });
