@@ -1,5 +1,7 @@
 const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generated');
 const prisma = new COURSEPrisma();
+const { PrismaClient: BRANCHPrisma } = require('../../../prisma/branches/generated');
+const branchprisma = new BRANCHPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const CourseService = {
@@ -60,7 +62,7 @@ const CourseService = {
         records.map(async (course) => {
           const branchIdsArray = course.branchIds.split(',').map((id) => id.trim());
 
-          const branches = await prisma.branch.findMany({
+          const branches = await branchprisma.branch.findMany({
             where: {
               id: { in: branchIdsArray }
             }
@@ -116,7 +118,7 @@ const CourseService = {
 
       const branchIdsArray = record.branchIds.split(',').map((id) => id.trim());
 
-      const branches = await prisma.branch.findMany({
+      const branches = await branchprisma.branch.findMany({
         where: {
           id: { in: branchIdsArray }
         }

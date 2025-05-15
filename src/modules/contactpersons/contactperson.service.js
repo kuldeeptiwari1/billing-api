@@ -1,5 +1,7 @@
 const { PrismaClient: CONTACTPERSONPrisma } = require('../../../prisma/contactpersons/generated');
 const prisma = new CONTACTPERSONPrisma();
+const { PrismaClient: BRANCHPrisma } = require('../../../prisma/branches/generated');
+const branchprisma = new BRANCHPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const ContactpersonService = {
@@ -37,7 +39,7 @@ const ContactpersonService = {
           allRecords.map(async (contact) => {
             const branchIdsArray = contact.branchIds.split(',').map((id) => id.trim());
 
-            const branches = await prisma.branch.findMany({
+            const branches = await branchprisma.branch.findMany({
               where: {
                 id: { in: branchIdsArray }
               }
@@ -88,7 +90,7 @@ const ContactpersonService = {
         records.map(async (contact) => {
           const branchIdsArray = contact.branchIds.split(',').map((id) => id.trim());
 
-          const branches = await prisma.branch.findMany({
+          const branches = await branchprisma.branch.findMany({
             where: {
               id: { in: branchIdsArray }
             }
@@ -145,7 +147,7 @@ const ContactpersonService = {
       // Enrich with branch data
       const branchIdsArray = record.branchIds.split(',').map((id) => id.trim());
 
-      const branches = await prisma.branch.findMany({
+      const branches = await branchprisma.branch.findMany({
         where: {
           id: { in: branchIdsArray }
         }

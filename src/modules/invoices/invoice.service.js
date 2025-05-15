@@ -1,5 +1,7 @@
 const { PrismaClient: INVOICEPrisma } = require('../../../prisma/invoices/generated');
 const prisma = new INVOICEPrisma();
+const { PrismaClient: STUDENTPrisma } = require('../../../prisma/students/generated');
+const studentprisma = new STUDENTPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const InvoiceService = {
@@ -58,7 +60,7 @@ const InvoiceService = {
 
       const enrichedRecords = await Promise.all(
         records.map(async (invoice) => {
-          const student = await prisma.student.findUnique({ where: { id: invoice.studentId } });
+          const student = await studentprisma.student.findUnique({ where: { id: invoice.studentId } });
 
           return {
             ...invoice,
@@ -108,7 +110,7 @@ const InvoiceService = {
         };
       }
 
-      const student = await prisma.student.findUnique({ where: { id: record.studentId } });
+      const student = await studentprisma.student.findUnique({ where: { id: record.studentId } });
 
       return {
         data: {
