@@ -7,7 +7,7 @@ const { getMessage } = require('../../utils/constant');
 const ContactpersonService = {
   add: async (data) => {
     try {
-      const record = await prisma.contactperson.create({ data });
+      const record = await prisma.contactPerson.create({ data });
       return {
         data: record,
         statusCode: 201,
@@ -31,7 +31,7 @@ const ContactpersonService = {
     try {
       // If no params, return all records
       if (!params) {
-        const allRecords = await prisma.contactperson.findMany({
+        const allRecords = await prisma.contactPerson.findMany({
           orderBy: { createdAt: 'desc' }
         });
 
@@ -78,7 +78,7 @@ const ContactpersonService = {
         };
       }
 
-      const records = await prisma.contactperson.findMany({
+      const records = await prisma.contactPerson.findMany({
         where: whereCondition,
         skip,
         take,
@@ -103,7 +103,7 @@ const ContactpersonService = {
         })
       );
 
-      const totalCount = await prisma.contactperson.count({ where: whereCondition });
+      const totalCount = await prisma.contactPerson.count({ where: whereCondition });
 
       return {
         data: enrichedRecords,
@@ -132,7 +132,7 @@ const ContactpersonService = {
 
   view: async (id) => {
     try {
-      const record = await prisma.contactperson.findUnique({ where: { id } });
+      const record = await prisma.contactPerson.findUnique({ where: { id } });
 
       if (!record) {
         return {
@@ -179,7 +179,7 @@ const ContactpersonService = {
 
   update: async (id, data) => {
     try {
-      const record = await prisma.contactperson.update({ where: { id }, data });
+      const record = await prisma.contactPerson.update({ where: { id }, data });
       return {
         data: record,
         statusCode: 200,
@@ -201,7 +201,7 @@ const ContactpersonService = {
 
   delete: async (id) => {
     try {
-      await prisma.contactperson.delete({ where: { id } });
+      await prisma.contactPerson.delete({ where: { id } });
       return {
         data: null,
         statusCode: 200,

@@ -8,7 +8,7 @@ generator client {
   output   = "./generated"
 }
 
-model ContactPerson {
+model contactperson {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   name  String
   phone String

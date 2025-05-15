@@ -1,4 +1,4 @@
-model ContactPerson {
+model contactperson {
   name      String
   phone     String
   email     String
