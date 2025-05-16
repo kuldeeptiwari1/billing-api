@@ -1,13 +1,13 @@
-const jwt = require("jsonwebtoken");
-const { PrismaClient: AUTHPrisma } = require("../../prisma/auth/generated");
-const prisma = new AUTHPrisma();
+const jwt = require('jsonwebtoken');
+// const { PrismaClient: AUTHPrisma } = require("../../prisma/auth/generated");
+// const prisma = new AUTHPrisma();
 // const { PrismaClient: MTRPrisma } = require("../../prisma/modulestorole/generated");
 // const prismamtr = new MTRPrisma();
-const { getMessage } = require("../utils/constant");
-const accessConfig = require("../config/access.json");
+const { getMessage } = require('../utils/constant');
+const accessConfig = require('../config/access.json');
 
 const sessionChecker = async (req, res, next) => {
-  next(); 
+  next();
   // try {
   //   const authHeader = req.headers["authorization"];
   //   if (!authHeader || !authHeader.startsWith("Bearer ")) {

@@ -2,6 +2,8 @@ const { PrismaClient: COURSEPrisma } = require('../../../prisma/courses/generate
 const prisma = new COURSEPrisma();
 const { PrismaClient: BRANCHPrisma } = require('../../../prisma/branches/generated');
 const branchprisma = new BRANCHPrisma();
+const { PrismaClient: DEPARTMENTPrisma } = require('../../../prisma/departments/generated');
+const departmentprisma = new DEPARTMENTPrisma();
 const { getMessage } = require('../../utils/constant');
 
 const CourseService = {
